@@ -35,7 +35,7 @@ dTheta_p = math.sqrt((db / k)**2 + (b * dk / k**2)**2)
 ax.plot([-b / k, xaxis[-1]], [0, k * xaxis[-1] + b], 'r')
 
 approx = poly.fit(xaxis[0:-3], yaxis[0:-3], 4)
-theta_k = calculations.newtonMethod(approx, 0, 280, 0.00001)
+theta_k = calculations.newtonMethod(approx, 0, 280, 0.001)
 index = calculations.closestValue(xaxis, theta_k)
 R2 = np.average(np.array([abs(approx(xaxis[i]) - yaxis[i]) + 0.5 * dy[index] + 0.5 * dy[index + 1] for i in range(np.shape(data)[0])]))
 dTheta_k = R2 / approx.deriv()(theta_k)
