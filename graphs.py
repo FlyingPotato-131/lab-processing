@@ -21,15 +21,15 @@ def baseLsqm(x, y):
 	return [k, b, dk, db]
 
 def lsqm(x, y, dx = None, dy = None):
-	if(dx == None and dy == None):
+	if(dx.any() == None and dy.any() == None):
 		return baseLsqm(x, y)
-	if(dx == None):
-		dx = np.empty(np.size(x))
-	if(dy == None):
-		dy = np.empty(np.size(y))
-	k, b, dk, db = lsqm(x, y)
-	Dk = math.sqrt(dk**2 + (dy / dx)**2 + (y * dx / x**2)**2)	
-	Db = math.sqrt(db**2 + dy**2 + (k * dx)**2)
+	if(dx.any() == None):
+		dx = np.zeros(np.size(x))
+	if(dy.any() == None):
+		dy = np.zeros(np.size(y))
+	k, b, dk, db = baseLsqm(x, y)
+	Dk = math.sqrt(dk**2 + (dy[-1] / x[-1])**2 + ((y[-1] - b) * dx[-1] / x[-1]**2)**2)	
+	Db = math.sqrt(db**2 + dy[-1]**2 + (k * dx[-1])**2)
 	return [k, b, Dk, Db]
 
 def plot(x, y, dx = None, dy = None, filename = None, plotFmt = '.', title = None, xlabel = None, ylabel = None):
@@ -72,7 +72,8 @@ def plotPoly(n, x, y, dx = None, dy = None, filename = None, plotFmt = '.', poly
 	approx = poly.fit(x, y, n)
 	t = np.linspace(x[0], x[-1], num = 1000)
 	ax.plot(t, approx(t), polyFmt)
-	ax.errorbar(x, y, dx, dy, fmt = plotFmt)
+	ax.errorbar(x, y, dy, dx, fmt = plotFmt)
 	if(filename != None):
 		plt.savefig(filename)
 	plt.show()
+	return approx
