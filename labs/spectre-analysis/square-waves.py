@@ -183,22 +183,23 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # 	ax.plot(data[:, 0], data[:, 1])
 # 	plt.show()
 
-# filesAm = glob.glob("data/am-50kHz-2kHz/*.csv")
-# adivaofm = np.empty([0, 2])
+filesAm = glob.glob("data/am-50kHz-2kHz/*.csv")
+adivaofm = np.empty([0, 2])
 
-# for dataFile in filesAm:
-# 	print(dataFile)
-# 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
-# 	peaks = calculations.findPeaks(data, 1, 0)
-# 	print(peaks)
-# 	Amain = peaks[1, 1]
-# 	Aside = 0.5 * peaks[0, 1] + 0.5 * peaks[2, 1]
-# 	dataFile = dataFile.replace("data/am-50kHz-2kHz/", '')
-# 	# m = float(dataFile)
-# 	m = float(re.search('[+-]?([0-9]*[.])?[0-9]+', re.search('[+-]?([0-9]*[.])?[0-9]+', dataFile).group(0)).group(0))
-# 	adivaofm = np.append(adivaofm, [[m, Aside / Amain]], axis = 0)
+for dataFile in filesAm:
+	print(dataFile)
+	data = csvreader.readTable(dataFile, 2, titleSize = 3)
+	graphs.plot(data[0:, 0], data[0:, 1], xlabel = "частота, кГц", ylabel = "амплитуда", plotFmt = '-')
+	peaks = calculations.findPeaks(data, 1, 0)
+	print(peaks)
+	Amain = peaks[1, 1]
+	Aside = 0.5 * peaks[0, 1] + 0.5 * peaks[2, 1]
+	dataFile = dataFile.replace("data/am-50kHz-2kHz/", '')
+	# m = float(dataFile)
+	m = float(re.search('[+-]?([0-9]*[.])?[0-9]+', re.search('[+-]?([0-9]*[.])?[0-9]+', dataFile).group(0)).group(0))
+	adivaofm = np.append(adivaofm, [[m, Aside / Amain]], axis = 0)
 
-# print(adivaofm)
+print(adivaofm)
 
 # print(graphs.plotLsqm(adivaofm[0:, 0], adivaofm[0:, 1], xlabel = "m", ylabel = "a_бок / a_осн"))
 
@@ -209,17 +210,17 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
 # 	graphs.plot(data[0:, 0], data[0:, 1], plotFmt = '-')
 
-data = csvreader.readTable("data/flt-400000Hz-150ns.csv", 3, titleSize = 3)
+# data = csvreader.readTable("data/flt-400000Hz-150ns.csv", 3, titleSize = 3)
 
-fig, ax = plt.subplots()
-plt.minorticks_on()
-plt.xlabel("ν, кГц")
-plt.ylabel("a, усл. ед.")
-plt.grid(True, "major", "both", color = "#888888")
-plt.grid(True, "minor", "both", linestyle = '--')
-ax.plot(data[:, 0], data[:, 1])
-ax.plot(data[:, 0], data[:, 2])
-# plt.close(fig)
-plt.show()
-fltPeaks = getSpectreParams(data[0:, 0:1])
-fltPeaks = getSpectreParams("data/flt-400000Hz-150ns.csv", 3, titleSize = 3, params = "harmonics")
+# fig, ax = plt.subplots()
+# plt.minorticks_on()
+# plt.xlabel("ν, кГц")
+# plt.ylabel("a, усл. ед.")
+# plt.grid(True, "major", "both", color = "#888888")
+# plt.grid(True, "minor", "both", linestyle = '--')
+# ax.plot(data[:, 0], data[:, 1])
+# ax.plot(data[:, 0], data[:, 2])
+# # plt.close(fig)
+# plt.show()
+# fltPeaks = getSpectreParams(data[0:, 0:1])
+# fltPeaks = getSpectreParams("data/flt-400000Hz-150ns.csv", 3, titleSize = 3, params = "harmonics")
