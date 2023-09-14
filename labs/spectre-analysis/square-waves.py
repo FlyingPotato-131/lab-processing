@@ -142,6 +142,7 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 
 # x = np.array([1 / i / 10**-6 for i in tau])
 # print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц'))
+# print(widths)
 
 # files100us = glob.glob("data/sq-100us/*Hz*.csv")
 # dists = np.empty([0, 2])
@@ -153,15 +154,16 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # 	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
 
 # print(graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1]))
+# print(dists)
 
-filesCg = glob.glob("data/cg*.csv")
-cgparams = np.empty([0, 6])
-for dataFile in filesCg:
-	print(dataFile)
-	cgparams = np.append(cgparams, [getSpectreParams(dataFile, alpha = 0.0001)], axis = 0)
+# filesCg = glob.glob("data/cg*.csv")
+# cgparams = np.empty([0, 6])
+# for dataFile in filesCg:
+# 	print(dataFile)
+# 	cgparams = np.append(cgparams, [getSpectreParams(dataFile, alpha = 0.0001)], axis = 0)
 
-print(cgparams)
-print(cgparams[0:, 2:4])
+# print(cgparams)
+# print(cgparams[0:, 2:4])
 
 # filesGs = glob.glob("data/gs*.csv")
 # gsparams = np.empty([0, 6])
@@ -198,7 +200,7 @@ print(cgparams[0:, 2:4])
 
 # print(adivaofm)
 
-# graphs.plotLsqm(adivaofm[0:, 0], adivaofm[0:, 1])
+# print(graphs.plotLsqm(adivaofm[0:, 0], adivaofm[0:, 1], xlabel = "m", ylabel = "a_бок / a_осн"))
 
 # filesPm = glob.glob("data/pm*.csv")
 
@@ -207,5 +209,17 @@ print(cgparams[0:, 2:4])
 # 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
 # 	graphs.plot(data[0:, 0], data[0:, 1], plotFmt = '-')
 
-# data = csvreader.readTable("data/flt-400000Hz-150ns.csv", 3, titleSize = 3)
-# fltPeaks = getSpectreParams(data[0:, 0:1])
+data = csvreader.readTable("data/flt-400000Hz-150ns.csv", 3, titleSize = 3)
+
+fig, ax = plt.subplots()
+plt.minorticks_on()
+plt.xlabel("ν, кГц")
+plt.ylabel("a, усл. ед.")
+plt.grid(True, "major", "both", color = "#888888")
+plt.grid(True, "minor", "both", linestyle = '--')
+ax.plot(data[:, 0], data[:, 1])
+ax.plot(data[:, 0], data[:, 2])
+# plt.close(fig)
+plt.show()
+fltPeaks = getSpectreParams(data[0:, 0:1])
+fltPeaks = getSpectreParams("data/flt-400000Hz-150ns.csv", 3, titleSize = 3, params = "harmonics")
