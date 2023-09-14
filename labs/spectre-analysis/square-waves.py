@@ -1,0 +1,141 @@
+import sys
+
+sys.path.append("../../")
+import csvreader
+import graphs
+import calculations
+import math
+import re
+import csv
+import numpy as np
+import matplotlib.pyplot as plt
+from numpy.polynomial import Polynomial as poly
+
+import glob
+# files = glob.glob("data/*.csv")
+
+def getSpectreParams(file, params = "widths", alpha = 1):
+	data = csvreader.readTable(file, 2, titleSize = 3)
+	freq = int(re.search('[0-9]+', re.search('[0-9]+Hz', file).group(0)).group(0))
+	pulseT = int(re.search('[0-9]+', re.search('[0-9]+us', file).group(0)).group(0))
+	coeff = alpha * freq * pulseT / 15000
+	peaks = calculations.findPeaks(data, coeff, 0)
+
+	maximum = np.argmax(peaks[0:, 1])
+	print(maximum)
+	deltaArg = 1
+	while(2 * peaks[maximum + deltaArg, 1] <= peaks[maximum, 1]):
+		# print(np.shape(peaks)[0] - maximum <= 1)
+		deltaArg = deltaArg + 1 if np.shape(peaks)[0] - maximum >= 1 else (deltaArg - 1)
+		# print(deltaArg)
+	delta = peaks[maximum + deltaArg, 0] - peaks[maximum, 0]
+	print(delta)
+
+	tmp = maximum + 1
+	while tmp < np.shape(peaks)[0]:
+		if(peaks[tmp, 0] - peaks[tmp - 1, 0] < 0.85 * delta):
+			# np.append(peaks, [peaksUnf[i]], axis = 0)
+			peaks = np.delete(peaks, tmp, axis = 0)
+		else:
+			tmp += 1
+
+	tmp = maximum - 1
+	while tmp > 0:
+		if(peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.85 * delta):
+			# np.append(peaks, [peaksUnf[i]], axis = 0)
+			peaks = np.delete(peaks, tmp, axis = 0)
+		else:
+			tmp -= 1
+
+	specEnd = 0
+	for i in range(maximum, np.shape(peaks)[0]):
+		# and peaks[i, 1] <= coeff / 6
+		if(i == np.shape(peaks)[0] - 1 or (peaks[i + 1, 0] - peaks[i, 0] > 1.1 * (peaks[maximum + 1, 0] - peaks[maximum, 0]))):
+			specEnd = i
+			break
+
+	specBegin = 0
+	for i in reversed(range(maximum)):
+		# print(i)
+		if(i == 0 or (peaks[i, 0] - peaks[i - 1, 0] > 1.1 * (peaks[maximum + 1, 0] - peaks[maximum, 0]))):
+			specBegin = i
+			break
+
+	print(specBegin, specEnd)
+
+	if(params == "harmonics"):
+		return peaks[0 : specEnd, 0:]
+
+	peakDist = np.average(np.array([abs(peaks[i, 0] - peaks[i - 1, 0]) for i in range(specBegin + 1, specEnd)]))
+	dDist = 2 * math.sqrt(np.average(np.array([(peaks[i, 0] - peaks[i - 1, 0] - peakDist)**2 for i in range(specBegin + 1, specEnd)])) / (specEnd - specBegin - 1))
+
+	print(peakDist, dDist)
+
+	spec0 = poly.fit(peaks[specBegin : specEnd + 1, 0], peaks[specBegin : specEnd + 1, 1], 2)
+	t = np.linspace(peaks[specBegin, 0] - 3, peaks[specEnd, 0] + 3, num = 1000)
+
+	spectreWidth = calculations.newtonMethod(spec0, 0, peaks[specEnd, 0], 0.01)
+	R2 = np.average(np.array([abs(spec0(peaks[i, 0]) - peaks[i, 1]) for i in range(specBegin, specEnd)]))
+	dWidth = -R2 / spec0.deriv()(spectreWidth)
+	print(spectreWidth, dWidth)
+
+	fig, ax = plt.subplots()
+	plt.minorticks_on()
+	plt.grid(True, "major", "both", color = "#888888")
+	plt.grid(True, "minor", "both", linestyle = '--')
+	ax.plot(t, spec0(t), 'r')
+	ax.plot(data[:, 0], data[:, 1])
+	ax.plot(peaks[:, 0], peaks[:, 1], 'r.')
+	# plt.close(fig)
+	plt.show()
+	return peakDist, dDist, spectreWidth, dWidth
+
+# for i in range(10):
+# 	getSpectreParams("data/sq-1000Hz/" + str((1 + i) * 20) + "us.csv")
+# for i in files:
+# 	print(i)
+	# getSpectreParams(i)
+# getSpectreParams("data/sq-1000Hz/80us.csv")
+# getSpectreParams("data/sq-100us/200Hz.csv")
+
+# constPeaks = getSpectreParams("data/sq-1000Hz/60us.csv", "harmonics")
+# print(constPeaks)
+
+# with open("results/sq-1000Hz-60us-harmonics.csv", 'w', newline = '') as results:
+# 	writer = csv.writer(results)
+# 	writer.writerow(['n'] + [i + 1 for i in range(np.shape(constPeaks)[0])])
+# 	writer.writerow(["nu_exp, kHz"] + constPeaks[0:, 0].tolist())
+# 	writer.writerow(["nu_theor, kHz"] + [i + 1 for i in range(np.shape(constPeaks)[0])])
+# 	writer.writerow(["|a|_exp"] + constPeaks[0:, 1].tolist())
+# 	writer.writerow(["|a / a_1|_exp"] + [i / constPeaks[0, 1] for i in constPeaks[0:, 1]])
+# 	writer.writerow(["|a / a_1|_theor"] + [abs(math.sin(math.pi * i * 60 * 10**-6 / 10**-3) / i / math.sin(math.pi * 60 * 10**-6 / 10**-3)) for i in range(1, np.shape(constPeaks)[0] + 1)])
+
+files1000Hz = glob.glob("data/sq-1000Hz-2/*.csv")
+widths = np.empty([0, 2])
+tau = np.empty(0)
+for dataFile in files1000Hz:
+	params = getSpectreParams(dataFile)
+	widths = np.append(widths, [[params[2], params[3]]], axis = 0)
+	tau = np.append(tau, int(re.search('[0-9]+', re.search('[0-9]+us', dataFile).group(0)).group(0)))
+
+x = np.array([1 / i / 10**-6 for i in tau])
+graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1])
+
+# files100us = glob.glob("data/sq-100us/*Hz*.csv")
+# dists = np.empty([0, 2])
+# nu = np.empty(0)
+# for dataFile in files100us:
+# 	print(dataFile)
+# 	params = getSpectreParams(dataFile)
+# 	dists = np.append(dists, [[params[0], params[1]]], axis = 0)
+# 	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
+
+# graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1])
+
+# filesCg = glob.glob("data/cg*.csv")
+# cgparams = np.empty([0, 4])
+# for dataFile in filesCg:
+# 	print(dataFile)
+# 	cgparams = np.append(cgparams, getSpectreParams(dataFile, alpha = 0.0001))
+
+# print(cgparams)

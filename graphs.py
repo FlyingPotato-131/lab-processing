@@ -20,12 +20,12 @@ def baseLsqm(x, y):
 	db = dk * math.sqrt(x2avg - xavg**2)
 	return [k, b, dk, db]
 
-def lsqm(x, y, dx = None, dy = None):
-	if(dx.any() == None and dy.any() == None):
+def lsqm(x, y, dx = np.empty(0), dy = np.empty(0)):
+	if(dx.size == 0 and dy.size == 0):
 		return baseLsqm(x, y)
-	if(dx.any() == None):
+	if(dx.size == 0):
 		dx = np.zeros(np.size(x))
-	if(dy.any() == None):
+	if(dy.size == 0):
 		dy = np.zeros(np.size(y))
 	k, b, dk, db = baseLsqm(x, y)
 	Dk = math.sqrt(dk**2 + (dy[-1] / x[-1])**2 + ((y[-1] - b) * dx[-1] / x[-1]**2)**2)	
@@ -40,12 +40,16 @@ def plot(x, y, dx = None, dy = None, filename = None, plotFmt = '.', title = Non
 	plt.title(title)
 	plt.xlabel(xlabel)
 	plt.ylabel(ylabel)	
-	ax.errorbar(x, y, dx, dy, fmt = plotFmt)
+	ax.errorbar(x, y, dy, dx, fmt = plotFmt)
 	if(filename != None):
 		plt.savefig(filename)
 	plt.show()
 
-def plotLsqm(x, y, dx = None, dy = None, filename = None, plotFmt = '.', lsqmFmt = 'r', title = None, xlabel = None, ylabel = None):
+def plotLsqm(x, y, dx = np.empty(0), dy = np.empty(0), filename = None, plotFmt = '.', lsqmFmt = 'r', title = None, xlabel = None, ylabel = None):
+	if(dx.size == 0):
+		dx = np.zeros(np.size(x))
+	if(dy.size == 0):
+		dy = np.zeros(np.size(y))
 	k, b, dk, db = lsqm(x, y, dx, dy)
 	fig, ax = plt.subplots()
 	plt.minorticks_on()
@@ -54,8 +58,8 @@ def plotLsqm(x, y, dx = None, dy = None, filename = None, plotFmt = '.', lsqmFmt
 	plt.title(title)
 	plt.xlabel(xlabel)
 	plt.ylabel(ylabel)	
-	ax.plot([x[0], x[-1]], [k * x[0] + b, k * x[-1] + b], lsqmFmt)
-	ax.errorbar(x, y, dx, dy, fmt = plotFmt)	
+	ax.plot([np.min(x), np.max(x)], [k * np.min(x) + b, k * np.max(x) + b], lsqmFmt)
+	ax.errorbar(x, y, dy, dx, fmt = plotFmt)	
 	if(filename != None):
 		plt.savefig(filename)
 	plt.show()

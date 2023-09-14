@@ -5,13 +5,12 @@ def newtonMethod(function, value, startValue, precision):
 	deriv = function.deriv()
 	x = startValue
 	dy = 2 * precision * abs(function(x) - value)
-	while(dy > precision * abs(function(x) - value)):
+	while(dy > precision * abs(function(startValue) - value)):
 		k = deriv(x)
 		y = function(x) - value
 		b = y - k * x
 		x = -b / k
 		dy = abs(y - (function(x) - value))
-		# print(dy)
 	return x
 
 def closestValue(array, value):
@@ -28,3 +27,12 @@ def closestValue(array, value):
 			else:
 				index += 1
 	return index
+
+def findPeaks(data, coeff, lowerBound):
+	peaks = np.empty([0, 2])
+	for i in range(1, np.shape(data)[0] - 1):
+		if((data[i, 1] - data[i-1, 1]) / (data[i, 0] - data[i-1, 0]) > coeff and data[i+1, 1] < data[i, 1] and data[i, 1] >= lowerBound):
+			peaks = np.append(peaks, [data[i]], axis = 0)
+		elif((data[i, 1] - data[i+1, 1]) / (data[i+1, 0] - data[i, 0]) > coeff and data[i-1, 1] < data[i, 1] and data[i, 1] >= lowerBound):
+			peaks = np.append(peaks, [data[i]], axis = 0)
+	return peaks
