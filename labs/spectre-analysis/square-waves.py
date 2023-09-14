@@ -14,7 +14,7 @@ from numpy.polynomial import Polynomial as poly
 import glob
 # files = glob.glob("data/*.csv")
 
-def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
+def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0, startMid = False):
 	data = csvreader.readTable(file, 2, titleSize = 3)
 	freq = int(re.search('[0-9]+', re.search('[0-9]+Hz', file).group(0)).group(0))
 	pulseT = int(re.search('[0-9]+', re.search('[0-9]+us', file).group(0)).group(0))
@@ -23,7 +23,7 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
 	# print(peaks)
 
 	maximum = np.argmax(peaks[0:, 1])
-	print(maximum)
+	# print(maximum)
 	deltaArg = 1
 	while(2 * peaks[maximum + deltaArg, 1] <= peaks[maximum, 1]):
 		# print(np.shape(peaks)[0] - maximum <= 1)
@@ -33,13 +33,23 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
 	print(delta)
 
 	tmp = maximum + 1
-	while tmp < np.shape(peaks)[0]:
-		if(peaks[tmp, 0] - peaks[tmp - 1, 0] < 0.85 * delta):
-			# np.append(peaks, [peaksUnf[i]], axis = 0)
+	while tmp < np.shape(peaks)[0] - 1:
+		if(peaks[tmp, 0] - peaks[tmp - 1, 0] < 0.85 * delta): # or (tmp < np.shape(peaks)[0] and peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.85 * delta)):
+			# if(peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.2 * delta):
+			# 	delvalue = np.argmin(peaks[tmp : tmp + 1, 1])
+			# else:
+			# 	delvalue = tmp	
+			# peaks = np.delete(peaks, np.argmin(peaks[tmp - 1:tmp, 1]), axis = 0)
+			# if(peaks[tmp, 1] < peaks[tmp - 1, 0]):
+			# 	tmp -= 1
 			peaks = np.delete(peaks, tmp, axis = 0)
 		else:
 			tmp += 1
+	# if(peaks[-1, 0] - peaks[-2, 0] > 5 * delta):
+	# 	peaks = np.delete(peaks, -1, axis = 0)
 
+	maximum = np.argmax(peaks[0:, 1])
+	# print(maximum)
 	tmp = maximum - 1
 	while tmp > 0:
 		if(peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.85 * delta):
@@ -75,12 +85,17 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
 	spec0 = poly.fit(peaks[specBegin : specEnd + 1, 0], peaks[specBegin : specEnd + 1, 1], plPower)
 	t = np.linspace(peaks[specBegin, 0] - 3, peaks[specEnd, 0] + 3, num = 1000)
 
-	rootMax = calculations.newtonMethod(spec0, 0, peaks[specEnd, 0], 0.01)
-	rootMin = calculations.newtonMethod(spec0, 0, peaks[specBegin, 0], 0.01)
+	if(not startMid):
+		rootMax = calculations.newtonMethod(spec0, height * peaks[maximum, 1], peaks[specEnd, 0], 0.01)
+		rootMin = calculations.newtonMethod(spec0, height * peaks[maximum, 1], peaks[specBegin, 0], 0.01)
+	else:
+		rootMax = calculations.newtonMethod(spec0, height * peaks[maximum, 1], 0.5 * peaks[specBegin, 0] + 0.5 * peaks[specEnd, 0], 0.01)
+		rootMin = rootMax
+
 	# print(rootMax, rootMin)
 	spectreWidth = rootMax - max(rootMin, 0) if rootMax - rootMin > peakDist else rootMax
 	R2 = np.average(np.array([abs(spec0(peaks[i, 0]) - peaks[i, 1]) for i in range(specBegin, specEnd)]))
-	dWidth = -R2 / spec0.deriv()(spectreWidth)
+	dWidth = abs(R2 / spec0.deriv()(spectreWidth))
 	print(spectreWidth, dWidth)
 
 	fig, ax = plt.subplots()
@@ -126,7 +141,7 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
 # 	tau = np.append(tau, int(re.search('[0-9]+', re.search('[0-9]+us', dataFile).group(0)).group(0)))
 
 # x = np.array([1 / i / 10**-6 for i in tau])
-# graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц')
+# print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц'))
 
 # files100us = glob.glob("data/sq-100us/*Hz*.csv")
 # dists = np.empty([0, 2])
@@ -137,18 +152,60 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2):
 # 	dists = np.append(dists, [[params[0], params[1]]], axis = 0)
 # 	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
 
-# graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1])
+# print(graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1]))
 
-# filesCg = glob.glob("data/cg*.csv")
-# cgparams = np.empty([0, 4])
-# for dataFile in filesCg:
-# 	print(dataFile)
-# 	cgparams = np.append(cgparams, getSpectreParams(dataFile, alpha = 0.0001))
-
-# print(cgparams)
-
-filesGs = glob.glob("data/gs*.csv")
-gsparams = np.empty([0, 4])
-for dataFile in filesGs:
+filesCg = glob.glob("data/cg*.csv")
+cgparams = np.empty([0, 6])
+for dataFile in filesCg:
 	print(dataFile)
-	gsparams = np.append(gsparams, getSpectreParams(dataFile, alpha = 0.01, plPower = 4))
+	cgparams = np.append(cgparams, [getSpectreParams(dataFile, alpha = 0.0001)], axis = 0)
+
+print(cgparams)
+print(cgparams[0:, 2:4])
+
+# filesGs = glob.glob("data/gs*.csv")
+# gsparams = np.empty([0, 6])
+# for dataFile in filesGs:
+# 	print(dataFile)
+# 	gsparams = np.append(gsparams, [getSpectreParams(dataFile, alpha = 0.01, plPower = 4, height = 0.5, startMid = True)], axis = 0)
+# 	print(gsparams[-1, 5] if gsparams[-1, 4] < 0 else min(gsparams[-1, 4], gsparams[-1, 5]))
+
+# filesAmSig = glob.glob("data/am*sig.csv")
+# for dataFile in filesAmSig:
+# 	print(dataFile)
+# 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
+# 	fig, ax = plt.subplots()
+# 	plt.minorticks_on()
+# 	plt.grid(True, "major", "both", color = "#888888")
+# 	plt.grid(True, "minor", "both", linestyle = '--')
+# 	ax.plot(data[:, 0], data[:, 1])
+# 	plt.show()
+
+# filesAm = glob.glob("data/am-50kHz-2kHz/*.csv")
+# adivaofm = np.empty([0, 2])
+
+# for dataFile in filesAm:
+# 	print(dataFile)
+# 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
+# 	peaks = calculations.findPeaks(data, 1, 0)
+# 	print(peaks)
+# 	Amain = peaks[1, 1]
+# 	Aside = 0.5 * peaks[0, 1] + 0.5 * peaks[2, 1]
+# 	dataFile = dataFile.replace("data/am-50kHz-2kHz/", '')
+# 	# m = float(dataFile)
+# 	m = float(re.search('[+-]?([0-9]*[.])?[0-9]+', re.search('[+-]?([0-9]*[.])?[0-9]+', dataFile).group(0)).group(0))
+# 	adivaofm = np.append(adivaofm, [[m, Aside / Amain]], axis = 0)
+
+# print(adivaofm)
+
+# graphs.plotLsqm(adivaofm[0:, 0], adivaofm[0:, 1])
+
+# filesPm = glob.glob("data/pm*.csv")
+
+# for dataFile in filesPm:
+# 	print(dataFile)
+# 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
+# 	graphs.plot(data[0:, 0], data[0:, 1], plotFmt = '-')
+
+# data = csvreader.readTable("data/flt-400000Hz-150ns.csv", 3, titleSize = 3)
+# fltPeaks = getSpectreParams(data[0:, 0:1])
