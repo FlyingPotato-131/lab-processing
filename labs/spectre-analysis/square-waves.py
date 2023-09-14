@@ -50,13 +50,13 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 
 	maximum = np.argmax(peaks[0:, 1])
 	# print(maximum)
-	# tmp = maximum - 1
-	# while tmp > 0:
-	# 	if(peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.85 * delta):
-	# 		# np.append(peaks, [peaksUnf[i]], axis = 0)
-	# 		peaks = np.delete(peaks, tmp, axis = 0)
-	# 	else:
-	# 		tmp -= 1
+	tmp = maximum - 1
+	while tmp > 0:
+		if(peaks[tmp + 1, 0] - peaks[tmp, 0] < 0.85 * delta):
+			# np.append(peaks, [peaksUnf[i]], axis = 0)
+			peaks = np.delete(peaks, tmp, axis = 0)
+		else:
+			tmp -= 1
 
 	specEnd = 0
 	for i in range(maximum, np.shape(peaks)[0]):
@@ -95,7 +95,7 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 	# print(rootMax, rootMin)
 	spectreWidth = rootMax - max(rootMin, 0) if rootMax - rootMin > peakDist else rootMax
 	R2 = np.average(np.array([abs(spec0(peaks[i, 0]) - peaks[i, 1]) for i in range(specBegin, specEnd)]))
-	dWidth = -R2 / spec0.deriv()(spectreWidth)
+	dWidth = abs(R2 / spec0.deriv()(spectreWidth))
 	print(spectreWidth, dWidth)
 
 	fig, ax = plt.subplots()
@@ -131,17 +131,17 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # 	writer.writerow(["|a / a_1|_exp"] + [i / constPeaks[0, 1] for i in constPeaks[0:, 1]])
 # 	writer.writerow(["|a / a_1|_theor"] + [abs(math.sin(math.pi * i * 60 * 10**-6 / 10**-3) / i / math.sin(math.pi * 60 * 10**-6 / 10**-3)) for i in range(1, np.shape(constPeaks)[0] + 1)])
 
-files1000Hz = glob.glob("data/sq-1000Hz-2/*.csv")
-widths = np.empty([0, 2])
-tau = np.empty(0)
-for dataFile in files1000Hz:
-	print(dataFile)
-	params = getSpectreParams(dataFile)
-	widths = np.append(widths, [[params[2], params[3]]], axis = 0)
-	tau = np.append(tau, int(re.search('[0-9]+', re.search('[0-9]+us', dataFile).group(0)).group(0)))
+# files1000Hz = glob.glob("data/sq-1000Hz-2/*.csv")
+# widths = np.empty([0, 2])
+# tau = np.empty(0)
+# for dataFile in files1000Hz:
+# 	print(dataFile)
+# 	params = getSpectreParams(dataFile)
+# 	widths = np.append(widths, [[params[2], params[3]]], axis = 0)
+# 	tau = np.append(tau, int(re.search('[0-9]+', re.search('[0-9]+us', dataFile).group(0)).group(0)))
 
-x = np.array([1 / i / 10**-6 for i in tau])
-print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц'))
+# x = np.array([1 / i / 10**-6 for i in tau])
+# print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц'))
 
 # files100us = glob.glob("data/sq-100us/*Hz*.csv")
 # dists = np.empty([0, 2])
@@ -152,15 +152,16 @@ print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с
 # 	dists = np.append(dists, [[params[0], params[1]]], axis = 0)
 # 	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
 
-# graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1])
+# print(graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1]))
 
-# filesCg = glob.glob("data/cg*.csv")
-# cgparams = np.empty([0, 4])
-# for dataFile in filesCg:
-# 	print(dataFile)
-# 	cgparams = np.append(cgparams, getSpectreParams(dataFile, alpha = 0.0001), axis = 0)
+filesCg = glob.glob("data/cg*.csv")
+cgparams = np.empty([0, 6])
+for dataFile in filesCg:
+	print(dataFile)
+	cgparams = np.append(cgparams, [getSpectreParams(dataFile, alpha = 0.0001)], axis = 0)
 
-# print(cgparams)
+print(cgparams)
+print(cgparams[0:, 2:4])
 
 # filesGs = glob.glob("data/gs*.csv")
 # gsparams = np.empty([0, 6])
