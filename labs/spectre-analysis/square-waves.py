@@ -144,17 +144,17 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # print(graphs.plotLsqm(x, widths[0:, 0], dy = widths[0:, 1], xlabel = "1 / τ, с^-1", ylabel = 'Δν, кГц'))
 # print(widths)
 
-# files100us = glob.glob("data/sq-100us/*Hz*.csv")
-# dists = np.empty([0, 2])
-# nu = np.empty(0)
-# for dataFile in files100us:
-# 	print(dataFile)
-# 	params = getSpectreParams(dataFile)
-# 	dists = np.append(dists, [[params[0], params[1]]], axis = 0)
-# 	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
+files100us = glob.glob("data/sq-100us/*Hz*.csv")
+dists = np.empty([0, 2])
+nu = np.empty(0)
+for dataFile in files100us:
+	print(dataFile)
+	params = getSpectreParams(dataFile)
+	dists = np.append(dists, [[params[0], params[1]]], axis = 0)
+	nu = np.append(nu, int(re.search('[0-9]+', re.search('[0-9]+Hz', dataFile).group(0)).group(0)))
 
-# print(graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1]))
-# print(dists)
+print(graphs.plotLsqm(nu, dists[0:, 0], dy = dists[0:, 1], xlabel = "частота, Гц", ylabel = "ширина спектра, кГц"))
+print(dists)
 
 # filesCg = glob.glob("data/cg*.csv")
 # cgparams = np.empty([0, 6])
@@ -183,23 +183,23 @@ def getSpectreParams(file, params = "widths", alpha = 1, plPower = 2, height = 0
 # 	ax.plot(data[:, 0], data[:, 1])
 # 	plt.show()
 
-filesAm = glob.glob("data/am-50kHz-2kHz/*.csv")
-adivaofm = np.empty([0, 2])
+# filesAm = glob.glob("data/am-50kHz-2kHz/*.csv")
+# adivaofm = np.empty([0, 2])
 
-for dataFile in filesAm:
-	print(dataFile)
-	data = csvreader.readTable(dataFile, 2, titleSize = 3)
-	graphs.plot(data[0:, 0], data[0:, 1], xlabel = "частота, кГц", ylabel = "амплитуда", plotFmt = '-')
-	peaks = calculations.findPeaks(data, 1, 0)
-	print(peaks)
-	Amain = peaks[1, 1]
-	Aside = 0.5 * peaks[0, 1] + 0.5 * peaks[2, 1]
-	dataFile = dataFile.replace("data/am-50kHz-2kHz/", '')
-	# m = float(dataFile)
-	m = float(re.search('[+-]?([0-9]*[.])?[0-9]+', re.search('[+-]?([0-9]*[.])?[0-9]+', dataFile).group(0)).group(0))
-	adivaofm = np.append(adivaofm, [[m, Aside / Amain]], axis = 0)
+# for dataFile in filesAm:
+# 	print(dataFile)
+# 	data = csvreader.readTable(dataFile, 2, titleSize = 3)
+# 	graphs.plot(data[0:, 0], data[0:, 1], xlabel = "частота, кГц", ylabel = "амплитуда", plotFmt = '-')
+# 	peaks = calculations.findPeaks(data, 1, 0)
+# 	print(peaks)
+# 	Amain = peaks[1, 1]
+# 	Aside = 0.5 * peaks[0, 1] + 0.5 * peaks[2, 1]
+# 	dataFile = dataFile.replace("data/am-50kHz-2kHz/", '')
+# 	# m = float(dataFile)
+# 	m = float(re.search('[+-]?([0-9]*[.])?[0-9]+', re.search('[+-]?([0-9]*[.])?[0-9]+', dataFile).group(0)).group(0))
+# 	adivaofm = np.append(adivaofm, [[m, Aside / Amain]], axis = 0)
 
-print(adivaofm)
+# print(adivaofm)
 
 # print(graphs.plotLsqm(adivaofm[0:, 0], adivaofm[0:, 1], xlabel = "m", ylabel = "a_бок / a_осн"))
 
