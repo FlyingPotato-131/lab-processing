@@ -103,6 +103,49 @@ $\delta \nu$, Гц            & $199.8 \pm 1.6$ & $499.9 \pm 1.5$ & $999.4 \pm 3
 \end{figure}
 
 
+\newpage
+\subsection*{Наблюдение спектра периодической последовательности цугов}
 
+Следуя техническому описанию генератора, мы установили режим подачи периодических импульсов синусоидальной формы (цугов) с параметрами: $\nu_0 = 50$ кГц, $T = 1$ мс, число периодов в одном импульсе $N = 5$ (длительность импульса $\tau = T/\nu_0 = 100$ мкс).
+
+Изменяя параметры сигнала $\nu_0$, T и N мы наблюдали следующие изменения вида спектра: при уменьшении периода повторения Т расстояние между гармониками $\delta \nu$ увеличивается; при увеличении числа периодов синусоиды в одном импульсе N ширина спектра $\Delta \nu$ уменьшается; при уменьшении несущей частоты $\nu_0$ уменьшается координата положения центра спектра.
+
+\begin{figure}[h]
+    \captionsetup[subfloat]{labelformat=empty}
+    \subfloat[$\nu_0 = 50$ кГц, $T = 1$ мс, $N = 5$]{{\includegraphics[width=\textwidth]{50kHz-1ms-5.png}}}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \captionsetup[subfloat]{labelformat=empty}
+    \subfloat[$\nu_0 = 50$ кГц, $T = 0.5$ мс, $N = 5$]{{\includegraphics[width=\textwidth]{50kHz-500us-5.png}}}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \captionsetup[subfloat]{labelformat=empty}
+    \subfloat[$\nu_0 = 50$ кГц, $T = 1$ мс, $N = 10$]{{\includegraphics[width=\textwidth]{50kHz-1ms-10.png}}}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \captionsetup[subfloat]{labelformat=empty}
+    \subfloat[$\nu_0 = 25$ кГц, $T = 1$ мс, $N = 5$]{{\includegraphics[width=\textwidth]{25kHz-1ms-5.png}}}
+\end{figure}
+
+\FloatBarrier
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+$\nu_0$, кГц	& T, мс		& N	& $\delta \nu$, Гц	& $\Delta \nu$, Гц 	\\ \hline
+50		& 1		& 5	& $1000.0 \pm 2.7$ 	& $18232 \pm 52$	\\ \hline
+50		& 0.5		& 5	& $2148 \pm 280$ 	& $23130 \pm 390$	\\ \hline
+50		& 1		& 10	& $1001 \pm 0$ 		& $9008 \pm 6.8$	\\ \hline
+25		& 1		& 5	& $998 \pm 6.3$ 	& $9170 \pm 12$		\\ \hline
+\end{tabular}
+\end{center}
 
 \end{document}

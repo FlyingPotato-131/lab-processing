@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.6)  15 SEP 2023 03:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.6)  15 SEP 2023 04:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -653,18 +653,75 @@ File: lsqm T.png Graphic file (type png)
 <use lsqm T.png>
 Package pdftex.def Info: lsqm T.png  used on input line 102.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
- [3 <./lsqm tau.png> <./lsqm T.png>] (./report.aux)
+ [3 <./lsqm tau.png> <./lsqm T.png>]pdfTeX warning (ext4): destination with the
+ same identifier (name{subfigure.1.1}) has been already used, duplicate ignored
+
+<to be read again> 
+                   \relax 
+l.115     \subfloat
+                   [$\nu_0 = 50$ кГц, $T = 1$ мс, $N = 5$]{{\includegra...
+<50kHz-1ms-5.png, id=65, 1387.584pt x 722.7pt>
+File: 50kHz-1ms-5.png Graphic file (type png)
+<use 50kHz-1ms-5.png>
+Package pdftex.def Info: 50kHz-1ms-5.png  used on input line 115.
+(pdftex.def)             Requested size: 483.69687pt x 251.92322pt.
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.1.1
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.121     \subfloat
+                   [$\nu_0 = 50$ кГц, $T = 0.5$ мс, $N = 5$]{{\includeg...
+<50kHz-500us-5.png, id=66, 1387.584pt x 722.7pt>
+File: 50kHz-500us-5.png Graphic file (type png)
+<use 50kHz-500us-5.png>
+Package pdftex.def Info: 50kHz-500us-5.png  used on input line 121.
+(pdftex.def)             Requested size: 483.69687pt x 251.92322pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.1.1
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.128     \subfloat
+                   [$\nu_0 = 50$ кГц, $T = 1$ мс, $N = 10$]{{\includegr...
+<50kHz-1ms-10.png, id=67, 1387.584pt x 722.7pt>
+File: 50kHz-1ms-10.png Graphic file (type png)
+<use 50kHz-1ms-10.png>
+Package pdftex.def Info: 50kHz-1ms-10.png  used on input line 128.
+(pdftex.def)             Requested size: 483.69687pt x 251.92322pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.1.1
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.135     \subfloat
+                   [$\nu_0 = 25$ кГц, $T = 1$ мс, $N = 5$]{{\includegra...
+<25kHz-1ms-5.png, id=68, 1387.584pt x 722.7pt>
+File: 25kHz-1ms-5.png Graphic file (type png)
+<use 25kHz-1ms-5.png>
+Package pdftex.def Info: 25kHz-1ms-5.png  used on input line 135.
+(pdftex.def)             Requested size: 483.69687pt x 251.92322pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4 <./50kHz-1ms-5.png>] [5 <./50kHz-500us-5.png> <./50kHz-1ms-10.png>] [6 <./25
+kHz-1ms-5.png>] [7
+
+] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15362 strings out of 479721
- 238944 string characters out of 5887698
+ 15399 strings out of 479721
+ 239607 string characters out of 5887698
  563293 words of memory out of 5000000
- 33080 multiletter control sequences out of 15000+600000
+ 33104 multiletter control sequences out of 15000+600000
  488821 words of font info for 79 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
- 69i,15n,79p,621b,694s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,15n,79p,681b,694s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0700.60
 0pk> </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm1000.
 600pk> </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm080
@@ -683,10 +740,10 @@ exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on report.pdf (3 pages, 1027669 bytes).
+Output written on report.pdf (7 pages, 1553527 bytes).
 PDF statistics:
- 336 PDF objects out of 1000 (max. 8388607)
- 93 compressed objects within 1 object stream
- 15 named destinations out of 1000 (max. 500000)
- 46 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 377 PDF objects out of 1000 (max. 8388607)
+ 113 compressed objects within 2 object streams
+ 24 named destinations out of 1000 (max. 500000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
