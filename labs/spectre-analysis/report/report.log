@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.6)  14 SEP 2023 23:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.9.6)  15 SEP 2023 03:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -430,6 +430,9 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
 )
+(/usr/share/texlive/texmf-dist/tex/latex/placeins/placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count300
@@ -438,31 +441,31 @@ File: l3backend-pdftex.def 2022-01-12 L3 backend support: PDF output (pdfTeX)
 (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 19.
-LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T2A/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
  (/usr/share/texlive/texmf-dist/tex/latex/ucs/ucsencs.def
 File: ucsencs.def 2011/01/21 Fixes to fontencodings LGR, T3
 )
-LaTeX Info: Redefining \th on input line 19.
-Package hyperref Info: Link coloring ON on input line 19.
+LaTeX Info: Redefining \th on input line 20.
+Package hyperref Info: Link coloring ON on input line 20.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -475,9 +478,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count301
 )
-LaTeX Info: Redefining \ref on input line 19.
-LaTeX Info: Redefining \pageref on input line 19.
-LaTeX Info: Redefining \nameref on input line 19.
+LaTeX Info: Redefining \ref on input line 20.
+LaTeX Info: Redefining \pageref on input line 20.
+LaTeX Info: Redefining \nameref on input line 20.
 
 (./report.out) (./report.out)
 \@outlinefile=\write3
@@ -547,19 +550,19 @@ Package caption Info: End \AtBeginDocument code.
 (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-4.def
 File: uni-4.def 2013/05/13 UCS: Unicode data U+0400..U+04FF
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 22.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 22.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (2.83282pt too wide) in paragraph at lines 25--28
+Overfull \hbox (2.83282pt too wide) in paragraph at lines 26--29
 \T2A/cmr/m/n/12 сиг-на-ла на вид со-от-вет-ству-ю-щих спек-тров; про-ве-рить сп
 ра-вед-ли-вость со-от-но-ше-ний неопре-
  []
@@ -567,63 +570,101 @@ Overfull \hbox (2.83282pt too wide) in paragraph at lines 25--28
 <10us.png, id=4, 1387.584pt x 722.7pt>
 File: 10us.png Graphic file (type png)
 <use 10us.png>
-Package pdftex.def Info: 10us.png  used on input line 38.
+Package pdftex.def Info: 10us.png  used on input line 39.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <20us.png, id=6, 1387.584pt x 722.7pt>
 File: 20us.png Graphic file (type png)
 <use 20us.png>
-Package pdftex.def Info: 20us.png  used on input line 39.
+Package pdftex.def Info: 20us.png  used on input line 40.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <60us.png, id=7, 1387.584pt x 722.7pt>
 File: 60us.png Graphic file (type png)
 <use 60us.png>
-Package pdftex.def Info: 60us.png  used on input line 40.
+Package pdftex.def Info: 60us.png  used on input line 41.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <80us.png, id=8, 1387.584pt x 722.7pt>
 File: 80us.png Graphic file (type png)
 <use 80us.png>
-Package pdftex.def Info: 80us.png  used on input line 41.
+Package pdftex.def Info: 80us.png  used on input line 42.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <100us.png, id=9, 1387.584pt x 722.7pt>
 File: 100us.png Graphic file (type png)
 <use 100us.png>
-Package pdftex.def Info: 100us.png  used on input line 42.
+Package pdftex.def Info: 100us.png  used on input line 43.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <140us.png, id=10, 1387.584pt x 722.7pt>
 File: 140us.png Graphic file (type png)
 <use 140us.png>
-Package pdftex.def Info: 140us.png  used on input line 43.
+Package pdftex.def Info: 140us.png  used on input line 44.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 <180us.png, id=11, 1387.584pt x 722.7pt>
 File: 180us.png Graphic file (type png)
 <use 180us.png>
-Package pdftex.def Info: 180us.png  used on input line 44.
+Package pdftex.def Info: 180us.png  used on input line 45.
 (pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
 
-LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 52.
-
-
-Overfull \hbox (35.16281pt too wide) in paragraph at lines 53--62
-[][] 
+Overfull \hbox (35.16281pt too wide) in paragraph at lines 54--63
+ [] 
  []
 
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2 <./10us.png> <./20us.pn
 g> <./60us.png> <./80us.png> <./100us.png> <./140us.png> <./180us.png>]
-(./report.aux)
+
+LaTeX Warning: Command \cyrm invalid in math mode on input line 71.
+
+
+LaTeX Warning: Command \cyrs invalid in math mode on input line 71.
+
+Missing character: There is no м in font cmr12!
+Missing character: There is no с in font cmr12!
+
+LaTeX Warning: Command \cyrk invalid in math mode on input line 71.
+
+
+LaTeX Warning: Command \CYRG invalid in math mode on input line 71.
+
+
+LaTeX Warning: Command \cyrc invalid in math mode on input line 71.
+
+Missing character: There is no к in font cmr12!
+Missing character: There is no Г in font cmr12!
+Missing character: There is no ц in font cmr12!
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.1.1
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.99     \subfloat
+                  [РњРќРљ РґР»СЏ РіСЂР°С„РёРєР° $\Delta \nu (1/\tau)$\\
+<lsqm tau.png, id=54, 1387.584pt x 722.7pt>
+File: lsqm tau.png Graphic file (type png)
+<use lsqm tau.png>
+Package pdftex.def Info: lsqm tau.png  used on input line 100.
+(pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.1.2
+}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.101     \subfloat
+                   [РњРќРљ РґР»СЏ РіСЂР°С„РёРєР° $\delta \nu (1/T)$\\
+<lsqm T.png, id=55, 1387.584pt x 722.7pt>
+File: lsqm T.png Graphic file (type png)
+<use lsqm T.png>
+Package pdftex.def Info: lsqm T.png  used on input line 102.
+(pdftex.def)             Requested size: 241.84843pt x 125.9561pt.
+ [3 <./lsqm tau.png> <./lsqm T.png>] (./report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 15317 strings out of 479721
- 237936 string characters out of 5887698
- 564191 words of memory out of 5000000
- 33042 multiletter control sequences out of 15000+600000
+ 15362 strings out of 479721
+ 238944 string characters out of 5887698
+ 563293 words of memory out of 5000000
+ 33080 multiletter control sequences out of 15000+600000
  488821 words of font info for 79 fonts, out of 8000000 for 9000
  430 hyphenation exceptions out of 8191
- 69i,15n,79p,410b,694s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 69i,15n,79p,621b,694s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm0700.60
 0pk> </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm1000.
 600pk> </home/dataflex/.texlive2021/texmf-var/fonts/pk/ljfour/lh/lh-t2a/larm080
@@ -638,12 +679,14 @@ cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
 i12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on report.pdf (2 pages, 858989 bytes).
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy7.pfb>
+Output written on report.pdf (3 pages, 1027669 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 84 compressed objects within 1 object stream
- 14 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 336 PDF objects out of 1000 (max. 8388607)
+ 93 compressed objects within 1 object stream
+ 15 named destinations out of 1000 (max. 500000)
+ 46 words of extra memory for PDF output out of 10000 (max. 10000000)
 
