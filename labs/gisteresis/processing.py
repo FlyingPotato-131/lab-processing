@@ -13,7 +13,7 @@ from numpy.polynomial import Polynomial as poly
 tau = 400
 R0 = 0.2
 
-params = csvreader.readTable('params.csv', 7)
+params = csvreader.readTable('params.csv', 11)
 
 for i in range(3):
 	sn = params[i - 1, 2] * params[i - 1, 1]
@@ -49,18 +49,37 @@ for i in range(3):
 	# R2 / D2(Bm)
 	mu0Raw = 1 / D1(0)
 	Dmu0Raw = 1 / D1(0) / D1(0.5 * data[0, 0] + 0.5 * data[-1, 0]) * R2
-	# print(muMaxRaw)
-	muMax = muMaxRaw * params[i-1, 6] * tau * R0 * params[i-1, 3] / sn / params[i-1, 5] / params[i-1, 0]
-	DmuMax = DmuMaxRaw * params[i-1, 6] * tau * R0 * params[i-1, 3] / sn / params[i-1, 5] / params[i-1, 0]
-	mu0 = mu0Raw * params[i-1, 6] * tau * R0 * params[i-1, 3] / sn / params[i-1, 5] / params[i-1, 0]
-	Dmu0 = Dmu0Raw * params[i-1, 6] * tau * R0 * params[i-1, 3] / sn / params[i-1, 5] / params[i-1, 0]
 
-	print(muMax, DmuMax)
-	print(mu0, Dmu0)
+	# print(muMaxRaw)
+	Hmax = params[i, 7]/2 * params[i, 5] * params[i, 0] / 0.02 / params[i, 3]
+	DHmax = 1 * params[i, 5] * params[i, 0] / 0.2 / params[i, 3]
+
+	Hc = params[i, 9]/2 * params[i, 5] * params[i, 0] / 0.02 / params[i, 3]
+	DHc = 1 * params[i, 5] * params[i, 0] / 0.2 / params[i, 3]
+
+	Bmax = params[i, 8]/2 * tau / sn * params[i, 6]
+	DBmax = 1 * tau / sn * params[i, 6]
+
+	Br = params[i, 10]/2 * tau / sn * params[i, 6]
+	DBr = 1 * tau / sn * params[i, 6]
+
+	muMax = muMaxRaw * params[i, 6] * tau * R0 * params[i, 3] / sn / params[i, 5] / params[i, 0]
+	DmuMax = DmuMaxRaw * params[i, 6] * tau * R0 * params[i, 3] / sn / params[i, 5] / params[i, 0]
+
+	mu0 = mu0Raw * params[i, 6] * tau * R0 * params[i, 3] / sn / params[i, 5] / params[i, 0]
+	Dmu0 = Dmu0Raw * params[i, 6] * tau * R0 * params[i, 3] / sn / params[i, 5] / params[i, 0]
+
+	print('mu_max', muMax, DmuMax)
+	print('mu_0', mu0, Dmu0)
 	print()
+	print('Hmax', Hmax, DHmax)	
+	print('Hc', Hc, DHc)
+	print('Bmax', Bmax, DBmax)
+	print('Br', Br, DBr)
 
 	ax.plot(lim1(y), y)
 	ax.plot(lim1(Bm), Bm, 'o')
 	ax.plot(data[0:, 1], data[0:, 0], '.')
 	
 	plt.show()
+
