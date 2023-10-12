@@ -1,7 +1,8 @@
+import math
 import numpy as np
 from numpy.polynomial import Polynomial as poly
 
-def newtonMethod(function, value, startValue, precision):
+def newtonMethod(function, value, startValue, precision, rootMin = None, rootMax = None):
 	deriv = function.deriv()
 	x = startValue
 	dy = 2 * precision * abs(function(x) - value)
@@ -11,7 +12,12 @@ def newtonMethod(function, value, startValue, precision):
 		b = y - k * x
 		x = -b / k
 		dy = abs(y - (function(x) - value))
-	return x
+		# if(dy <= precision * abs(function(startValue) - value) and not(rootMin is None) and x < rootMin):
+		# 	return rootMin
+		# if(dy <= precision * abs(function(startValue) - value) and not (rootMax is None) and x > rootMax):
+		# 	return rootMax
+	return min(rootMax, max(rootMin, x))
+	# return x
 
 def closestValue(array, value):
 	index = 0
@@ -36,3 +42,6 @@ def findPeaks(data, coeff, lowerBound):
 		elif((data[i, 1] - data[i+1, 1]) / (data[i+1, 0] - data[i, 0]) > coeff and data[i-1, 1] < data[i, 1] and data[i, 1] >= lowerBound):
 			peaks = np.append(peaks, [data[i]], axis = 0)
 	return peaks
+
+def R2(function, x, y):
+	return math.sqrt(np.sum(np.array([(y[i] - function(x[i]))**2 for i in range(len(x))])))
