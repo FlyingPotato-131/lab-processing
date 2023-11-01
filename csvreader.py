@@ -19,3 +19,8 @@ def readMisc(fileName, width, hasTitle = False):
 
 def readMiscVert(fileName, height):
 	return readTable(fileName, 1, titleSize = 0).reshape(1, height)[0]
+
+def readData(filename, titlesize = 1, datatype = 'f'):
+	with open(filename, newline = '') as file:
+		reader = csv.reader(file)
+		return np.array(list(reader))[titlesize:, ].astype(datatype)
