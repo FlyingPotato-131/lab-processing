@@ -16,7 +16,7 @@ def newtonMethod(function, value, startValue, precision, rootMin = None, rootMax
 		# 	return rootMin
 		# if(dy <= precision * abs(function(startValue) - value) and not (rootMax is None) and x > rootMax):
 		# 	return rootMax
-	return min(rootMax, max(rootMin, x))
+	return min(rootMax, max(rootMin, x)) if rootMin != None and rootMax != None else x
 	# return x
 
 def closestValue(array, value):

@@ -27,7 +27,7 @@ de_0 = 0.5 * dbl * 1E+6 / (bl * 1E+6)**1.5
 print('ε_0 = {} +- {}'.format(e_0, de_0))
 
 # print('σ = {} +- {} (попадает в порядок)'.format(1 / (b * 1E+6)**0.5 * k**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, 0))
-print('σ_lfe = {} +- {}'.format(e_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
+print('σ_lfe = ({} +- {}) Ом/м'.format(e_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
 print('для меди М3 (которая использовалась в работе) σ = 56.2E+6, попадает в порядок')
 print()
 
@@ -39,7 +39,7 @@ dpsi = ((0.1 / hfe[:, 4] * math.pi)**2 + (0.1 * hfe[:, 3] / hfe[:, 4]**2 * math.
 kh, bh, dkh, dbh = graphs.plotlsqm(hfe[:, 0]**0.5, psi - math.pi / 4, 1 / 2 / hfe[:, 0]**0.5, dpsi, bflag = False, title = 'Ψ of ν^0.5', xlabel = 'ν^0.5, Hz^0.5', ylabel = 'Ψ, rad')
 # print(kh, dkh)
 # print(bh)
-print('σ_hfe = {} +- {}'.format(kh**2 / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7, 2 * kh * dkh / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7))
+print('σ_hfe = ({} +- {}) Ом/м'.format(kh**2 / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7, 2 * kh * dkh / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7))
 print('это сильно ближе, в первом косяков не вижу так что видимо считать из разности фаз точнее')
 
 Hcoeff = data[:, 2] / data[:, 1] / data[:, 0] / e_0
