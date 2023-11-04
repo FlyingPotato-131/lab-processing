@@ -86,24 +86,32 @@ for path in os.listdir('./probe-data/'):
 
 	print('Iiн = ({} +- {}) A'.format(coeffs[0], dcoeffs[0]))
 
-	R = [coeffs[0] * coeffs[1] + coeffs[2], math.sqrt((dcoeffs[0] * coeffs[1])**2 + (coeffs[0] * dcoeffs[1])**2 + (dcoeffs[2])**2)]
-	print('dI/dU = ({} +- {}) Ом:-1'.format(*R))
+	Rinv = [coeffs[0] * coeffs[1] + coeffs[2], math.sqrt((dcoeffs[0] * coeffs[1])**2 + (coeffs[0] * dcoeffs[1])**2 + (dcoeffs[2])**2)]
+	print('dI/dU = ({} +- {}) Ом^-1'.format(*Rinv))
 
-	T = [0.5 * 1.6E-19 * coeffs[0] / R[0] / 1.38E-23, math.sqrt((0.5 * 1.6E-19 * dcoeffs[0] / R[0] / 1.38E-23)**2 + (0.5 * 1.6E-19 * coeffs[0] * R[1] / R[0]**2 / 1.38E-23)**2)]
+	#переводим в СГС
+	# U = U * 1E+8 / 3E+10
+	# I = I * 0.1 * 3E+10
+	Iion = coeffs[0] * 0.1 * 3E+10
+	dIion = dcoeffs[0] * 0.1 * 3E+10
+	Rinv = [r / 1E+9 * 3E+10**2 for r in Rinv]
+
+	T = [0.5 * 4.8E-10 * Iion / Rinv[0] / 1.38E-16, math.sqrt((0.5 * 4.8E-10 * dIion / Rinv[0] / 1.38E-16)**2 + (0.5 * 4.8E-10 * Iion * Rinv[1] / Rinv[0]**2 / 1.38E-16)**2)]
 	T_e = np.append(T_e, [[t * 8.62E-5 for t in T]], axis = 0)
 	print('Te = ({} +- {}) эВ'.format(*([t * 8.62E-5 for t in T])))
+	# print('Te = ({} +- {}) эВ'.format(*([t for t in T])))
 
-	n = [coeffs[0] / 0.4 / 1.6E-19 / (math.pi * 0.2E-3 * 5.2E-3) * math.sqrt(20 * 1.672E-27 / 2 / 1.38E-23 / T[0]), math.sqrt((dcoeffs[0] / 0.4 / 1.6E-19 / (math.pi * 0.2E-3 * 5.2E-3) * math.sqrt(20 * 1.672E-27 / 2 / 1.38E-23 / T[0]))**2 + (0.5 * coeffs[0] / 0.4 / 1.6E-19 / (math.pi * 0.2E-3 * 5.2E-3) * math.sqrt(20 * 1.672E-27 / 2 / 1.38E-23 / T[0]**2))**2)]
+	n = [Iion / 0.4 / 4.8E-10 / (math.pi * 0.2E-1 * 5.2E-1) * math.sqrt(20 * 1.672E-24 / 2 / 1.38E-16 / T[0]), math.sqrt((dIion / 0.4 / 4.8E-10 / (math.pi * 0.2E-1 * 5.2E-1) * math.sqrt(20 * 1.672E-24 / 2 / 1.38E-16 / T[0]))**2 + (0.5 * Iion / 0.4 / 4.8E-10 / (math.pi * 0.2E-1 * 5.2E-1) * math.sqrt(20 * 1.672E-24 / 2 / 1.38E-16 / T[0]**2))**2)]
 	ne = np.append(ne, [n], axis = 0)
-	print('n = ({} +- {}) m^-3'.format(*n))
+	print('ne = ni = ({} +- {}) cm^-3'.format(*n))
 
-	wp = [math.sqrt(4 * math.pi * n[0] * 1.6E-19**2 / 9.109E-31), 0.5 * math.sqrt(4 * math.pi * 1.6E-19**2 / 9.109E-31 / n[0]) * n[1]]
+	wp = [math.sqrt(4 * math.pi * n[0] * 4.8E-10**2 / 9.109E-28), 0.5 * math.sqrt(4 * math.pi * 4.8E-10**2 / 9.109E-28 / n[0]) * n[1]]
 	print('wp = ({} +- {}) Hz'.format(*wp))
 
-	rDe = [math.sqrt(1.38E-23 * T[0] / 4 / math.pi / n[0] / 1.6E-19**2), math.sqrt((0.5 * math.sqrt(1.38E-23 / 4 / math.pi / n[0] / 1.6E-19**2 / T[0]) * T[1])**2 + (0.5 * math.sqrt(1.38E-23 * T[0] / 4 / math.pi / n[0]**3 / 1.6E-19**2) * n[1])**2)]
-	rDi = [math.sqrt(1.38E-23 * 293 / 4 / math.pi / n[0] / 1.6E-19**2), math.sqrt((0.5 * math.sqrt(1.38E-23 / 4 / math.pi / n[0] / 1.6E-19**2 / 293) * 15)**2 + (0.5 * math.sqrt(1.38E-23 * 293 / 4 / math.pi / n[0]**3 / 1.6E-19**2) * n[1])**2)]
-	print('rDe = ({} +- {}) m'.format(*rDe))
-	print('rDi = ({} +- {}) m'.format(*rDi))
+	rDe = [math.sqrt(1.38E-16 * T[0] / 4 / math.pi / n[0] / 4.8E-10**2), math.sqrt((0.5 * math.sqrt(1.38E-16 / 4 / math.pi / n[0] / 4.8E-10**2 / T[0]) * T[1])**2 + (0.5 * math.sqrt(1.38E-16 * T[0] / 4 / math.pi / n[0]**3 / 4.8E-10**2) * n[1])**2)]
+	rDi = [math.sqrt(1.38E-16 * 293 / 4 / math.pi / n[0] / 4.8E-10**2), math.sqrt((0.5 * math.sqrt(1.38E-16 / 4 / math.pi / n[0] / 4.8E-10**2 / 293) * 15)**2 + (0.5 * math.sqrt(1.38E-16 * 293 / 4 / math.pi / n[0]**3 / 4.8E-10**2) * n[1])**2)]
+	print('rDe = ({} +- {}) cm'.format(*rDe))
+	print('rDi = ({} +- {}) cm'.format(*rDi))
 
 	ND = [4/3 * math.pi * n[0] * rDi[0]**3, math.sqrt((4/3 * math.pi * n[1] * rDi[0]**3)**2 + (4 * math.pi * n[0] * rDi[0]**2 * rDi[1])**2)]
 	print('ND = {} +- {}'.format(*ND))

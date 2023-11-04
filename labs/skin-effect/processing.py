@@ -49,7 +49,7 @@ h = 1.5E-3
 a = 4.5E-2
 
 x = np.linspace(np.min(np.log(data[:, 0])), np.max(np.log(data[:, 0])), num = 1000)
-b = np.sqrt(math.pi * np.exp(x) * kh**2 / math.pi / 1.5E-3**2)
+b = np.sqrt(math.pi * np.exp(x) * kh**2 / math.pi / 1.5E-3**2 / 2.5)
 # b = np.sqrt(math.pi * np.exp(x) * 56.2E+6 * 4 * math.pi * 1E-7)
 y = 1 / np.sqrt((np.cosh(b*h) * np.cos(b*h) - b*a/2 * np.cosh(b*h) * np.sin(b*h) + b*a/2 * np.sinh(b*h) * np.cos(b*h))**2 + (b*a/2 * np.sinh(b*h) * np.cos(b*h) + np.sinh(b*h) * np.sin(b*h) + b*a/2 * np.cosh(b*h) * np.sin(b*h))**2)
 # graphs.plot(x, y)
