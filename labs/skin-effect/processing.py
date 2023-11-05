@@ -63,6 +63,7 @@ Lmin = np.min(coildata[:, 1])
 Lmax = np.max(coildata[:, 1])
 
 coildata = coildata[(coildata[:, 1] != Lmin)]
+graphs.plot(coildata[:, 0]**2, (Lmax - coildata[:, 1]) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - coildata[:12, 1]) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points, too far from theory to be useful', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 # print(kc, dkc)
 print('σ_L = ({} +- {}) м/Ом'.format(kc / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7), dkc / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7)))
