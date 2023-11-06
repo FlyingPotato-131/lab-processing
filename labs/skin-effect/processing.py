@@ -38,8 +38,8 @@ dpsi0 = ((0.1 / lfetan[:, 4] * math.pi)**2 + (0.1 * lfetan[:, 3] / lfetan[:, 4]*
 
 # kt, bt, dkt, dbt = graphs.lsqm(lfetan[:, 0], np.tan(psi0[:]), np.array([1] *  np.size(psi0[:])), dpsi0[:] / np.cos(psi0[:])**2)
 # print(kt)
-kt, bt, dkt, dbt = graphs.plotlsqm(lfetan[:, 0], np.tan(psi0), np.ones(np.size(lfetan[:, 0])), dpsi0 / np.cos(psi0)**2, title = 'tan(Ψ) of ν', xlabel = 'ν, Hz', ylabel = 'tan(Ψ)')
-print('σ_tan = ({} +- {}) м/Ом'.format(kt / math.pi / 4.5E-2 / 1.5E-3 / (4 * math.pi * 1E-7), 0))
+kt, bt, dkt, dbt = graphs.plotlsqm(lfetan[:, 0], np.tan(psi0), np.ones(np.size(lfetan[:, 0])), dpsi0 / np.cos(psi0)**2, title = 'tan(Ψ) of ν', xlabel = 'ν, Hz', ylabel = 'tan(Ψ)', bflag = False)
+print('σ_tan = ({} +- {}) м/Ом'.format(kt / math.pi / 4.5E-2 / 1.5E-3 / (4 * math.pi * 1E-7), dkt / math.pi / 4.5E-2 / 1.5E-3 / (4 * math.pi * 1E-7)))
 print('примерно тот же результат, хз почему такие беды')
 print()
 # graphs.plot(hfetan[15:, 0], np.tan(psi0[15:]), np.array([1] *  np.size(psi0[15:])), dpsi0[15:] / np.cos(psi0[15:])**2)
@@ -63,11 +63,12 @@ Lmin = np.min(coildata[:, 1])
 Lmax = np.max(coildata[:, 1])
 
 coildata = coildata[(coildata[:, 1] != Lmin)]
-graphs.plot(coildata[:, 0]**2, (Lmax - coildata[:, 1]) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
-kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - coildata[:12, 1]) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points, too far from theory to be useful', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
+graphs.plot(coildata[:, 0]**2, (Lmax - Lmin) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
+kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - Lmin) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points, too far from theory to be useful', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 # print(kc, dkc)
-print('σ_L = ({} +- {}) м/Ом'.format(kc / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7), dkc / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7)))
-print('данный результат бесполезен из-за явного несходства входных данных с теорией')
+print('σ_L = ({} +- {}) м/Ом'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7)))
+# print('данный результат бесполезен из-за явного несходства входных данных с теорией')
+print('результат такой себе, но для оценки пойдет')
 print()
 
 Hcoeff = data[:, 2] / data[:, 1] / data[:, 0] / e_0
@@ -77,7 +78,7 @@ h = 1.5E-3
 a = 4.5E-2
 
 x = np.linspace(np.min(np.log(data[:, 0])), np.max(np.log(data[:, 0])), num = 1000)
-b = np.array([np.sqrt(math.pi * np.exp(x) * e_0 * kl**0.5 / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kt / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kh**2 / math.pi / 1.5E-3**2)])
+b = np.array([np.sqrt(math.pi * np.exp(x) * e_0 * kl**0.5 / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kt / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kh**2 / math.pi / 1.5E-3**2), np.sqrt(math.pi * np.exp(x) * math.sqrt(kc) / math.pi / a / h)])
 # b = np.sqrt(math.pi * np.exp(x) * 56.2E+6 * 4 * math.pi * 1E-7)
 y = 1 / np.sqrt((np.cosh(b*h) * np.cos(b*h) - b*a/2 * np.cosh(b*h) * np.sin(b*h) + b*a/2 * np.sinh(b*h) * np.cos(b*h))**2 + (b*a/2 * np.sinh(b*h) * np.cos(b*h) + np.sinh(b*h) * np.sin(b*h) + b*a/2 * np.cosh(b*h) * np.sin(b*h))**2)
 # print(y)
@@ -92,8 +93,8 @@ plt.title('H/H_0 of ln(ν)')
 plt.xlabel('ln(ν)')
 plt.ylabel('H/H_0')
 
-for i in range(3):
-	ax.plot(x, y[i, :], label = ['σ_lfe', 'σ_tan', 'σ_hfe'][i])
+for i in range(4):
+	ax.plot(x, y[i, :], label = ['σ_lfe', 'σ_tan', 'σ_hfe', 'σ_L'][i])
 ax.errorbar(np.log(data[:, 0]), Hcoeff, 1 / data[:, 0], dHcoeff, fmt = '.', label = 'experimental')
 plt.legend()
 plt.show()

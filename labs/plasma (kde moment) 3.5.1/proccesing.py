@@ -68,11 +68,11 @@ Ip = np.empty(0)
 
 for path in os.listdir('./probe-data/'):
 	print(path)
-	Ip = np.append(Ip, re.search(r'([0-9]*[.])?[0-9]+', path)[0])
+	Ip = np.append(Ip, float(re.search(r'([0-9]*[.])?[0-9]+', path)[0]))
 
 	probe = csvreader.readData('./probe-data/' + path)
-	U = np.append(probe[:, 0] - (0.5 * probe[:, 0] - 0.5 * probe[:, 2]), -probe[:, 2] + (0.5 * probe[:, 0] - 0.5 * probe[:, 2]))
-	I = np.append(probe[:, 1] - (0.5 * probe[:, 1] - 0.5 * probe[:, 3]), -probe[:, 3] + (0.5 * probe[:, 1] - 0.5 * probe[:, 3])) * 1E-6
+	U = np.append(probe[:, 0] - (0.5 * probe[:, 0] - 0.5 * probe[:, 2]), -probe[:, 2] - (0.5 * probe[:, 0] - 0.5 * probe[:, 2]))
+	I = np.append(probe[:, 1] - (0.5 * probe[:, 1] - 0.5 * probe[:, 3]), -probe[:, 3] - (0.5 * probe[:, 1] - 0.5 * probe[:, 3])) * 1E-6
 
 	U_0 = np.linspace(np.min(U), np.max(U), num = 1000)
 	coeffs, cov = scipy.optimize.curve_fit(probevac, U, I)
