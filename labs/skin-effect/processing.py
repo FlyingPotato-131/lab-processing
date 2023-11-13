@@ -27,8 +27,8 @@ de_0 = 0.5 * dbl * 1E+6 / (bl * 1E+6)**1.5
 print('ε_0 = {} +- {} Ом * с'.format(e_0, de_0))
 
 # print('σ = {} +- {} (попадает в порядок)'.format(1 / (b * 1E+6)**0.5 * k**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, 0))
-print('σ_lfe = ({} +- {}) м/Ом'.format(e_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
-print('для меди М3 (которая использовалась в работе) σ = 56.2E+6, попадает в порядок')
+print('σ_lfe = ({} +- {}) м/Ом'.format(e_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
+print('для меди М3 (которая использовалась в работе) σ = 56.2E+6, довольно близко')
 print()
 
 lfetan = np.array([row for row in lfe if abs(abs(row[3] / row[4] * math.pi - 0.5 * math.pi) - 0.5 * math.pi) > 0.1 and abs(abs(row[3] / row[4] * math.pi - 0.5 * math.pi) - 1.5 * math.pi) > 0.1])
@@ -39,8 +39,8 @@ dpsi0 = ((0.1 / lfetan[:, 4] * math.pi)**2 + (0.1 * lfetan[:, 3] / lfetan[:, 4]*
 # kt, bt, dkt, dbt = graphs.lsqm(lfetan[:, 0], np.tan(psi0[:]), np.array([1] *  np.size(psi0[:])), dpsi0[:] / np.cos(psi0[:])**2)
 # print(kt)
 kt, bt, dkt, dbt = graphs.plotlsqm(lfetan[:, 0], np.tan(psi0), np.ones(np.size(lfetan[:, 0])), dpsi0 / np.cos(psi0)**2, title = 'tan(Ψ) of ν', xlabel = 'ν, Hz', ylabel = 'tan(Ψ)', bflag = False)
-print('σ_tan = ({} +- {}) м/Ом'.format(kt / math.pi / 4.5E-2 / 1.5E-3 / (4 * math.pi * 1E-7), dkt / math.pi / 4.5E-2 / 1.5E-3 / (4 * math.pi * 1E-7)))
-print('примерно тот же результат, хз почему такие беды')
+print('σ_tan = ({} +- {}) м/Ом'.format(kt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7), dkt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7)))
+print('примерно тот же результат')
 print()
 # graphs.plot(hfetan[15:, 0], np.tan(psi0[15:]), np.array([1] *  np.size(psi0[15:])), dpsi0[15:] / np.cos(psi0[15:])**2)
 
@@ -54,7 +54,7 @@ kh, bh, dkh, dbh = graphs.plotlsqm(hfe[:, 0]**0.5, psi - math.pi / 4, 1 / 2 / hf
 # print(kh, dkh)
 # print(bh)
 print('σ_hfe = ({} +- {}) м/Ом'.format(kh**2 / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7, 2 * kh * dkh / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7))
-print('это сильно ближе, в первом косяков не вижу так что видимо считать из разности фаз точнее')
+print('это чуть ближе')
 print()
 
 coildata = csvreader.readData('coil-data.csv')
@@ -64,9 +64,9 @@ Lmax = np.max(coildata[:, 1])
 
 coildata = coildata[(coildata[:, 1] != Lmin)]
 graphs.plot(coildata[:, 0]**2, (Lmax - Lmin) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
-kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - Lmin) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points, too far from theory to be useful', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
+kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - Lmin) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 # print(kc, dkc)
-print('σ_L = ({} +- {}) м/Ом'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 4.5E-2 / (4 * math.pi * 1E-7)))
+print('σ_L = ({} +- {}) м/Ом'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7)))
 # print('данный результат бесполезен из-за явного несходства входных данных с теорией')
 print('результат такой себе, но для оценки пойдет')
 print()
@@ -75,7 +75,7 @@ Hcoeff = data[:, 2] / data[:, 1] / data[:, 0] / e_0
 dHcoeff = ((0.001 / data[:, 1] / data[:, 0] / e_0)**2 + (data[:, 2] * 0.001 / data[:, 1]**2 / data[:, 0] / e_0)**2 + (data[:, 2] * 1 / data[:, 1] / data[:, 0]**2 / e_0)**2 + (data[:, 2] * de_0 / data[:, 1] / data[:, 0] / e_0**2)**2)**0.5
 
 h = 1.5E-3
-a = 4.5E-2
+a = 2.25E-2
 
 x = np.linspace(np.min(np.log(data[:, 0])), np.max(np.log(data[:, 0])), num = 1000)
 b = np.array([np.sqrt(math.pi * np.exp(x) * e_0 * kl**0.5 / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kt / math.pi / a / h), np.sqrt(math.pi * np.exp(x) * kh**2 / math.pi / 1.5E-3**2), np.sqrt(math.pi * np.exp(x) * math.sqrt(kc) / math.pi / a / h)])
@@ -98,4 +98,4 @@ for i in range(4):
 ax.errorbar(np.log(data[:, 0]), Hcoeff, 1 / data[:, 0], dHcoeff, fmt = '.', label = 'experimental')
 plt.legend()
 plt.show()
-print('ирония в том, что первые 2 значения проводимости не сходятся с реальным, но показывают верные результаты ослабления поля')
+# print('ирония в том, что первые 2 значения проводимости не сходятся с реальным, но показывают верные результаты ослабления поля')
