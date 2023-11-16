@@ -27,7 +27,7 @@ de_0 = 0.5 * dbl * 1E+6 / (bl * 1E+6)**1.5
 print('ε_0 = {} +- {} Ом * с'.format(e_0, de_0))
 
 # print('σ = {} +- {} (попадает в порядок)'.format(1 / (b * 1E+6)**0.5 * k**0.5 / math.pi / 4.5E-2 / 1.5E-3 / 4 / math.pi / 1E-7, 0))
-print('σ_lfe = ({} +- {}) 1/(Ом * м)'.format(e_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
+print('σ_lfe = ({} +- {}) м/Ом'.format(e_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7, math.sqrt((de_0 * kl**0.5 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2 + (dkl / 2 / math.sqrt(kl) * e_0 / math.pi / 2.25E-2 / 1.5E-3 / 4 / math.pi / 1E-7)**2)))
 print('для меди М3 (которая использовалась в работе) σ = 56.2E+6, довольно близко')
 print()
 
@@ -39,7 +39,7 @@ dpsi0 = ((0.1 / lfetan[:, 4] * math.pi)**2 + (0.1 * lfetan[:, 3] / lfetan[:, 4]*
 # kt, bt, dkt, dbt = graphs.lsqm(lfetan[:, 0], np.tan(psi0[:]), np.array([1] *  np.size(psi0[:])), dpsi0[:] / np.cos(psi0[:])**2)
 # print(kt)
 kt, bt, dkt, dbt = graphs.plotlsqm(lfetan[:, 0], np.tan(psi0), np.ones(np.size(lfetan[:, 0])), dpsi0 / np.cos(psi0)**2, title = 'tan(Ψ) of ν', xlabel = 'ν, Hz', ylabel = 'tan(Ψ)', bflag = False)
-print('σ_tan = ({} +- {}) 1/(Ом * м)'.format(kt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7), dkt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7)))
+print('σ_tan = ({} +- {}) м/Ом'.format(kt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7), dkt / math.pi / 2.25E-2 / 1.5E-3 / (4 * math.pi * 1E-7)))
 print('примерно тот же результат')
 print()
 # graphs.plot(hfetan[15:, 0], np.tan(psi0[15:]), np.array([1] *  np.size(psi0[15:])), dpsi0[15:] / np.cos(psi0[15:])**2)
@@ -53,7 +53,7 @@ dpsi = ((0.1 / hfe[:, 4] * math.pi)**2 + (0.1 * hfe[:, 3] / hfe[:, 4]**2 * math.
 kh, bh, dkh, dbh = graphs.plotlsqm(hfe[:, 0]**0.5, psi - math.pi / 4, 1 / 2 / hfe[:, 0]**0.5, dpsi, bflag = False, title = 'Ψ of ν^0.5', xlabel = 'ν^0.5, Hz^0.5', ylabel = 'Ψ - π/4, rad')
 # print(kh, dkh)
 # print(bh)
-print('σ_hfe = ({} +- {}) 1/(Ом * м)'.format(kh**2 / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7, 2 * kh * dkh / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7))
+print('σ_hfe = ({} +- {}) м/Ом'.format(kh**2 / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7, 2 * kh * dkh / math.pi / 1.5E-3**2 / 4 / math.pi / 1E-7))
 print('это чуть ближе')
 print()
 
@@ -66,7 +66,7 @@ coildata = coildata[(coildata[:, 1] != Lmin)]
 graphs.plot(coildata[:, 0]**2, (Lmax - Lmin) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - Lmin) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 # print(kc, dkc)
-print('σ_L = ({} +- {}) 1/(Ом * м)'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7)))
+print('σ_L = ({} +- {}) м/Ом'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7)))
 # print('данный результат бесполезен из-за явного несходства входных данных с теорией')
 print('результат такой себе, но для оценки пойдет')
 print()
