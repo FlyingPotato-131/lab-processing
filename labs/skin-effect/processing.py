@@ -59,12 +59,15 @@ print()
 
 coildata = csvreader.readData('coil-data.csv')
 graphs.plot(coildata[:, 0], coildata[:, 1], 1, 0.1, title = 'L of ν', xlabel = 'ν, Hz', ylabel = 'L, mH')
-Lmin = np.min(coildata[:, 1])
+# Lmin = np.min(coildata[:, 1])
+Lmin = 5
 Lmax = np.max(coildata[:, 1])
 
+print(Lmin, Lmax)
+
 coildata = coildata[(coildata[:, 1] != Lmin)]
-graphs.plot(coildata[:, 0]**2, (Lmax - Lmin) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
-kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - Lmin) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
+graphs.plot(coildata[:, 0]**2, (Lmax - coildata[:, 1]) / (coildata[:, 1] - Lmin), title = 'f(L) of ν^2', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
+kc, bc, dkc, dbc = graphs.plotLsqm(coildata[:12, 0]**2, (Lmax - coildata[:12, 1]) / (coildata[:12, 1] - Lmin), bflag = False, title = 'f(L) of ν^2, first 12 points', xlabel = 'ν^2, Hz^2', ylabel = '(Lmax - L) / (L - Lmin)')
 # print(kc, dkc)
 print('σ_L = ({} +- {}) 1/(Ом * м)'.format(math.sqrt(kc) / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7), dkc / math.sqrt(kc) / 2 / math.pi / 1.5E-3 / 2.25E-2 / (4 * math.pi * 1E-7)))
 # print('данный результат бесполезен из-за явного несходства входных данных с теорией')
