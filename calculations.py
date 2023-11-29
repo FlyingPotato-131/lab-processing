@@ -22,10 +22,12 @@ def newtonMethod(function, value, startValue, precision, rootMin = None, rootMax
 def closestValue(array, value):
 	index = 0
 	isRising = (array[1] - array[0] > 0)
-	if(isRising and value < array[0]):
+	if((isRising and value < array[0]) or (not isRising and value > array[0])):
 		return index
 	while(index < np.size(array)):
-		print('test')
+		# print('test')
+		# print(isRising)
+		# print(index)
 		if((isRising and value > array[index]) or (not isRising and value < array[index])):
 			if((isRising and value < array[index + 1]) or (not isRising and value > array[index + 1])):
 				# break

@@ -88,3 +88,10 @@ def plotPoly(n, x, y, dx = None, dy = None, filename = None, plotFmt = '.', poly
 		plt.savefig(filename)
 	plt.show()
 	return approx
+
+def basePlot():
+	fig, ax = plt.subplots()
+	plt.minorticks_on()
+	plt.grid(True, 'major', 'both', color = '#888888')
+	plt.grid(True, 'minor', 'both', linestyle = '--')
+	return fig, ax
