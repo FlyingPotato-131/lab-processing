@@ -49,7 +49,7 @@ LxdivCx = (R0 * 3e10)**2
 Lx = math.sqrt(LxCx * LxdivCx)
 dLx = 0.5 * math.sqrt(LxdivCx / LxCx) * dLxCx
 print(f'Lx = {Lx:.2f} +- {dLx:.2f} сгс')
-Cx = 0.5 * math.sqrt(LxCx / LxdivCx)
+Cx = math.sqrt(LxCx / LxdivCx)
 dCx = 0.5 * math.sqrt(1 / LxdivCx / LxCx) * dLxCx
 print(f'Cx = {Cx:.3f} +- {dCx:.3f} сгс')
 
@@ -58,14 +58,14 @@ dx2 = 1 / np.sqrt(phasedata[0:, 0]) * 0.01e6
 y2 = alphaw
 dy2 = dalphaw
 k, b, dk, db = graphs.plotlsqm(x2, y2, dx2, dy2, bflag = False, title = 'α of sqrt(ν)', xlabel = 'sqrt(ν), sqrt(Hz)', ylabel = 'α, cm^-1')
-sigma = (2 / math.sqrt(LxdivCx) / 3e10 / d / k)**2
-dsigma = (2 / math.sqrt(LxdivCx) / 3e10 / d / k) * 2 / math.sqrt(LxdivCx) / 3e10 / d / k**2 * dk
+sigma = (2 / math.sqrt(LxdivCx) / d / k)**2
+dsigma = (2 / math.sqrt(LxdivCx) / d / k) * 2 / math.sqrt(LxdivCx) / d / k**2 * dk
 # print(sigma, dsigma)
-print(f'σ_A = {sigma * 1e3:.3f} +- {dsigma * 1e3:.3f} мсгс')
+print(f'σ_A = {sigma / 1e15:.0f} +- {dsigma / 1e15:.0f} * 10^15 сгс')
 
 x3 = (np.sqrt(phasedata[0:, 0]))**3
 y3 = alphaw * kw
-k, b, dk, db = graphs.plotlsqm(x3, y3, bflag = False)
+k, b, dk, db = graphs.plotlsqm(x3, y3, bflag = False, title = 'kα of ν^3/2', xlabel = 'ν^3/2, Hz^3/2', ylabel = 'kα, cm^-2')
 sigma = (4 * pi * Cx / d / 3e10 / k)**2
 dsigma = (4 * pi * Cx / d / 3e10 / k) * (4 * pi * dCx / d / 3e10 / k + 4 * pi * Cx / d / 3e10 / k**2 * dk)
-print(f'σ_Б = {sigma} +- {dsigma} сгс')
+print(f'σ_Б = {sigma / 1e15:.0f} +- {dsigma / 1e15:.0f} * 10^15 сгс')
