@@ -19,6 +19,7 @@ dvpharray = np.empty(0)
 
 for i in range(4):
 	k, b, dk, db = graphs.plotlsqm(harmonics, L * resonancedata[0:, i], np.zeros(4), L * 0.01e6 * np.ones(4) + 0.1 * resonancedata[0:, i] * np.ones(4), bflag = False, title = 'Lν of harmonic')
+	print(f'k = {k} +- {dk}')
 	vpharray = np.append(vpharray, k)
 	dvpharray = np.append(dvpharray, dk)
 
@@ -40,6 +41,8 @@ dy1 = kw * dkw + alphaw * dalphaw
 graphs.plotlsqm(x1 * 1e-15, y1, dx1 * 1e-15, dy1, bflag = False, title = 'k^2 - α^2 of ω^2', xlabel = 'ω^2, Hz^2 * 10^15', ylabel = 'k^2 - α^2, cm^-2')
 k, b, dk, db = graphs.lsqm(x1, y1, dx1, dy1, bflag = False)
 
+print(f'k = {k} +- {dk}')
+
 LxCx = k * 3e10**2 
 dLxCx = dk * 3e10**2
 
@@ -58,6 +61,7 @@ dx2 = 1 / np.sqrt(phasedata[0:, 0]) * 0.01e6
 y2 = alphaw
 dy2 = dalphaw
 k, b, dk, db = graphs.plotlsqm(x2, y2, dx2, dy2, bflag = False, title = 'α of sqrt(ν)', xlabel = 'sqrt(ν), sqrt(Hz)', ylabel = 'α, cm^-1')
+print(f'k = {k} +- {dk}')
 sigma = (2 / math.sqrt(LxdivCx) / d / k)**2
 dsigma = (2 / math.sqrt(LxdivCx) / d / k) * 2 / math.sqrt(LxdivCx) / d / k**2 * dk
 # print(sigma, dsigma)
@@ -66,6 +70,7 @@ print(f'σ_A = {sigma / 1e15:.0f} +- {dsigma / 1e15:.0f} * 10^15 сгс')
 x3 = (np.sqrt(phasedata[0:, 0]))**3
 y3 = alphaw * kw
 k, b, dk, db = graphs.plotlsqm(x3, y3, bflag = False, title = 'kα of ν^3/2', xlabel = 'ν^3/2, Hz^3/2', ylabel = 'kα, cm^-2')
+print(f'k = {k} +- {dk}')
 sigma = (4 * pi * Cx / d / 3e10 / k)**2
 dsigma = (4 * pi * Cx / d / 3e10 / k) * (4 * pi * dCx / d / 3e10 / k + 4 * pi * Cx / d / 3e10 / k**2 * dk)
 print(f'σ_Б = {sigma / 1e15:.0f} +- {dsigma / 1e15:.0f} * 10^15 сгс')
