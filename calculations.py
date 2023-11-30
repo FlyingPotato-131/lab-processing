@@ -47,3 +47,7 @@ def findPeaks(data, coeff, lowerBound):
 
 def R2(function, x, y):
 	return math.sqrt(np.sum(np.array([(y[i] - function(x[i]))**2 for i in range(len(x))])))
+
+def avgerror(array, darray):
+	avg = np.average(array)
+	return [avg, math.sqrt(np.average((array - avg)**2) + np.average(darray)**2)]
