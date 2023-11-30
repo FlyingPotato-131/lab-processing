@@ -33,6 +33,7 @@ phaseshift = 2 * pi * phasedata[0:, 1] * phasedata[0:, 0] + phasedata[0:, 2] * p
 dphaseshift = np.sqrt((2 * pi * 0.01e-7 * phasedata[0:, 0])**2 + (2 * pi * phasedata[0:, 1] * 0.01e6)**2)
 kw = phaseshift / L
 dkw = dphaseshift / L
+print(f'k которое надо смотреть = {kw} +- {dkw}')
 
 x1 = (2 * pi * phasedata[0:, 0])**2
 dx1 = 4 * pi**2 * phasedata[0:, 0] * 0.01e6
