@@ -56,8 +56,9 @@ ax.plot(data[0:, 0], data[0:, 5], '.', label = 'Δy')
 ax.plot(data[0:, 0], data[0:, 6], '.', label = 'Δx1')
 ax.plot(data[0:, 0], data[0:, 7], '.', label = 'Δx2')
 
-ax.plot(data[0:, 0], data[0:, 0] / 2 * (pi - 8 / pi) / 4 / E / I * R**3 * 1e4 * 2, label = 'Δy theor')
-ax.plot(data[0:, 0], data[0:, 0] / 2 * (8 / pi - 1) / 4 / E / I * R**3 * 1e4, label = 'Δx theor')
+ax.plot(data[0:, 0], data[0:, 0] / 2 * (pi - 8 / pi) / 32 / E / I * R**3 * 1e4 * 2, label = 'Δy theor')
+ax.plot(data[0:, 0], data[0:, 0] / 2 * (8 / pi - 1) / 16 / E / I * R**3 * 1e4, label = 'Δx theor')
+#пока здесь подгнаны 16 и 32, надо уточнить рассчеты
 
 plt.title('offset of P, round frame')
 plt.xlabel('P, n')
