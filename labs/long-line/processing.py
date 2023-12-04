@@ -47,7 +47,8 @@ print(f'k = {k} +- {dk}')
 LxCx = k * 3e10**2 
 dLxCx = dk * 3e10**2
 
-R0 = 7.23e-11 #в сгс
+# R0 = 7.23e-11 #в сгс
+R0 = 50 / 9 * 1e-11
 LxdivCx = (R0 * 3e10)**2
 
 Lx = math.sqrt(LxCx * LxdivCx)
@@ -55,7 +56,7 @@ dLx = 0.5 * math.sqrt(LxdivCx / LxCx) * dLxCx
 print(f'Lx = {Lx:.2f} +- {dLx:.2f} сгс')
 Cx = math.sqrt(LxCx / LxdivCx)
 dCx = 0.5 * math.sqrt(1 / LxdivCx / LxCx) * dLxCx
-print(f'Cx = {Cx:.3f} +- {dCx:.3f} сгс')
+print(f'Cx = {Cx:.2f} +- {dCx:.2f} сгс')
 
 x2 = np.sqrt(phasedata[0:, 0])
 dx2 = 1 / np.sqrt(phasedata[0:, 0]) * 0.01e6
