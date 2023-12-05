@@ -11,7 +11,7 @@ from math import sqrt, pi
 
 L = 0.3 / sqrt(2)
 R = 0.395 / 2
-h = 0.03
+h = 0.0302
 b = 0.005
 I = h * b**3 / 12
 E = 2e11
@@ -41,6 +41,10 @@ plt.ylabel('offset, 0.1mm')
 
 plt.legend()
 plt.show()
+
+h = 0.0295
+b = 0.0055
+I = h * b**3 / 12
 
 fig, ax = graphs.basePlot()
 
