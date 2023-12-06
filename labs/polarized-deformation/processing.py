@@ -30,11 +30,13 @@ for i in range(1, 4):
 	# partial = data[np.all(data != 0, axis = 1)]
 	partial = np.array([row for row in data if row[3 + 3 * i] != 0])
 	# print(partial, '\n')
-	dist = 0.5 * partial[0:, 3 + 3 * i] + 0.5 * partial[0:, 3 + 3 * i + 1]
+	dist = (0.5 * partial[0:, 3 + 3 * i] + 0.5 * partial[0:, 3 + 3 * i + 1]) * 1e-3
 	tension = h * partial[0:, 0] * 11 * 0.1 / 4 / I * dist
 	fig, ax = graphs.basePlot()
 
-	k, b, dk, db = graphs.lsqm(partial[0:, 0], tension)
+	k, b, dk, db = graphs.lsqm(partial[0:, 0], tension, np.zeros(np.size(tension)), partial[0:, 3 + 3 * i + 2])
+	print(f'k = {k} +- {dk}')
+	print(f'b = {b} +- {db}\n')
 
 	plt.title('σ of i')
 	plt.xlabel('i')
