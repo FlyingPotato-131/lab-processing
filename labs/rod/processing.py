@@ -13,8 +13,9 @@ fig, ax = graphs.basePlot()
 
 k, b, dk, db = graphs.lsqm(data[0:, 0], data[0:, 1])
 
-ktheor = 0.03
+ktheor = 0.019
 # надо заменить на значение из теории
+# заменил
 
 plt.title('Y1 of F1')
 plt.xlabel('F1, n')
