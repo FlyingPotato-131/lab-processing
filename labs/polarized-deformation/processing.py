@@ -34,7 +34,7 @@ for i in range(1, 4):
 	tension = h * partial[0:, 0] * 11 * 0.1 / 4 / I * dist
 	fig, ax = graphs.basePlot()
 
-	k, b, dk, db = graphs.lsqm(partial[0:, 0], tension, np.zeros(np.size(tension)), partial[0:, 3 + 3 * i + 2])
+	k, b, dk, db = graphs.lsqm(partial[0:, 0], tension, np.zeros(np.size(tension)), partial[0:, 3 + 3 * i + 2], bflag = 1)
 	print(f'k = {k} +- {dk}')
 	print(f'b = {b} +- {db}\n')
 
