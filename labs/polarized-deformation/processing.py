@@ -30,15 +30,15 @@ for i in range(9, 13):
 	partial = data[i, 6:20]
 	# print(partial)
 	dist = -0.5 * (partial[::3] + partial[1::3])
-	tension = h * data[i, 0] * 11 * 0.1 / 4 / I * dist
+	tension = h * data[i, 0] * 11 * 0.1 * 9.8 / 4 / I * dist
 	fig, ax = graphs.basePlot()
 	k, b, dk, db = graphs.lsqm(np.arange(2, 7), tension, np.zeros(np.size(tension)), partial[2::3], bflag = 1)
 
-	print(f'P = {data[i, 0] * 11 * 0.1:.2f} n')
+	print(f'P = {data[i, 0] * 11 * 0.1 * 9.8:.2f} n')
 	print(f'k = {k * 1e-9:.1f} +- {dk * 1e-9:.1f} * 10^9 Pa')
 	print(f'b = {b * 1e-9:.1f} +- {db * 1e-9:.1f} * 10^9 Pa\n')
 
-	plt.title(f'σ of i, P = {data[i, 0] * 11 * 0.1:.2f} n')
+	plt.title(f'σ of i, P = {data[i, 0] * 11 * 0.1 * 9.8:.2f} n')
 	plt.xlabel('i')
 	plt.ylabel('σ, Pa')
 
