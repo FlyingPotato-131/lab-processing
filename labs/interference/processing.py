@@ -24,8 +24,19 @@ dnu = np.sqrt((2 * angleData[0:, 3] / (angleData[0:, 4] + angleData[0:, 3])**2 *
 nu3 = nu / nu1 #equasion 17
 dnu3 = np.sqrt((dnu / nu1)**2 + (nu / nu1 * dnu1)**2)
 
-graphs.plot(np.cos(np.radians(angleData[0:, 0])), nu3, np.sin(np.radians(angleData[0:, 0])) * np.radians(1), dnu3, title = "ν3(cosβ)", xlabel = "cosβ", ylabel = "ν3") #laser is likely polarized
-graphs.plot(np.cos(np.radians(angleData[0:, 0]))**2, nu3, np.abs(2 * np.cos(np.radians(angleData[0:, 0])) * np.sin(np.radians(angleData[0:, 0])) * np.radians(1)), dnu3, title = "ν3(cos^2β)", xlabel = "cos^2β", ylabel = "ν3")
+graphs.plot(np.cos(np.radians(angleData[0:, 0])), nu3, np.sin(np.radians(angleData[0:, 0])) * np.radians(2), dnu3, title = "ν3(cosβ)", xlabel = "cosβ", ylabel = "ν3") #laser is likely polarized
+graphs.plot(np.cos(np.radians(angleData[0:, 0]))**2, nu3, np.abs(2 * np.cos(np.radians(angleData[0:, 0])) * np.sin(np.radians(angleData[0:, 0])) * np.radians(2)), dnu3, title = "ν3(cos^2β)", xlabel = "cos^2β", ylabel = "ν3")
+
+fig, ax = graphs.basePlot()
+plt.title("nu3(beta)")
+plt.xlabel("beta, deg")
+plt.ylabel("nu3")
+ax.errorbar(angleData[0:, 0], nu3, dnu3, 1)
+x = np.linspace(angleData[0, 0], angleData[-1, 0], num = 100)
+ax.plot(x, np.cos(np.radians(x)), label = "cos(beta)")
+ax.plot(x, np.cos(np.radians(x))**2, label = "cos**2(beta)")
+plt.legend()
+plt.show()
 
 linData = csvreader.readData("lin-data.csv")
 
@@ -45,8 +56,8 @@ dmax2 = 2.5
 lhalf = 28 - max1 #l_1/2
 dlhalf = 1 + dmax1
 
-L = 0.5 * (max2 - max1) #from graph 1
-dL = 0.5 * (dmax1 + dmax2)
+L = (max2 - max1) #from graph 1
+dL = (dmax1 + dmax2)
 
 print(f"L = ({L:.1f} +- {dL:.1f}) cm")
 print(f"Δν_m = ({c / 2 / (L/100) * 1e-6:.0f} +- {c / 2 / (L/100)**2 * dL/100 * 1e-6:.0f}) MHz") #equasion 1
