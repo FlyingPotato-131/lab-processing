@@ -9,7 +9,7 @@ import math
 import matplotlib.pyplot as plt
 
 data1 = csvreader.readData("data1.csv")
-k, b, dk, db = graphs.plotlsqm(data1[:, 3], np.sin(np.radians(data1[:, 0] + data1[:, 1] / 60)), title = "diffraction angle over wavelength", ylabel = "sin(φ_m)", xlabel = "λ, nm", bflag = False)
+k, b, dk, db = graphs.plotlsqm(data1[:, 3], np.sin(np.radians(data1[:, 0] + data1[:, 1] / 60)), np.zeros(np.shape(data1)[0]), np.cos(np.radians(data1[:, 0] + data1[:, 1] / 60)) * 1 / 60, title = "diffraction angle over wavelength", ylabel = "sin(φ_m)", xlabel = "λ, nm", bflag = False)
 
 print(f"d = ({1 / k * 1e-3:.4f} +- {1 / k**2 * dk * 1e-3:.4f}) μm")
 
