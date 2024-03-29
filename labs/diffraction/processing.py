@@ -38,7 +38,7 @@ plt.show()
 data3 = csvreader.readData("data3.csv")
 phi1 = data3[:, 1] + data3[:, 2] / 60 + data3[:, 3] / 3600
 phi2 = data3[:, 4] + data3[:, 5] / 60 + data3[:, 6] / 3600
-wvl1 = 1 / k * np.sin(np.radians(phi1)) / data3[:, 0]
-wvl2 = 1 / k * np.sin(np.radians(phi2)) / data3[:, 0]
+wvl1 = np.abs(1 / k * np.sin(np.radians(phi1)) / data3[:, 0])
+wvl2 = np.abs(1 / k * np.sin(np.radians(phi2)) / data3[:, 0])
 R = wvl1 / np.abs(wvl1 - wvl2)
 print(f"R = {R}")
