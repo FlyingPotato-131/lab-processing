@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import math
 
 polData = csvreader.readData("pol-data.csv")
-graphs.plot(np.cos(np.radians(polData[:, 0]))**2, polData[:, 0], np.ones(np.shape(polData)[0]) * 2 * np.abs(np.cos(np.radians(polData[:, 0])) * np.sin(np.radians(polData[:, 0]))) * np.radians(1), np.ones(np.shape(polData)[0]), title = "intensity over polarization angle", xlabel = "cos^2(α)", ylabel = "receiver voltage V, uV")
+graphs.plot(np.cos(np.radians(polData[:, 0]))**2, polData[:, 1], np.ones(np.shape(polData)[0]) * 2 * np.abs(np.cos(np.radians(polData[:, 0])) * np.sin(np.radians(polData[:, 0]))) * np.radians(1), np.ones(np.shape(polData)[0]), title = "intensity over polarization angle", xlabel = "cos^2(α)", ylabel = "receiver voltage V, uV")
 
 interfData = csvreader.readData("interf-data.csv")
 print(f"λ = ({2 * (interfData[np.argmax(interfData[:, 1]), 0] - interfData[np.argmin(interfData[:, 1]), 0])} +- {2 * 0.5:.2f}) mm")
