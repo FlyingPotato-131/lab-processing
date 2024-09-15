@@ -37,3 +37,15 @@ Etheor = np.array(data[2,:] / (1 + mc2 / 2 / data[2,:]))
 graphs.plot(Etheor, data[4,:], title = "экспериментальные и рассчетные границы Комптоновского излучения", xlabel = "рассчетная энергия, МэВ", ylabel = "экспериментальная энергия, МэВ")
 
 graphs.plotlsqm(1 / np.concatenate([data[2,:3], [data[2, 4]]]), np.concatenate([Ri[:3], [Ri[4]]])**2, 0.1 / K / np.concatenate([data[2,:3], [data[2, 4]]])**2, 2 * np.concatenate([Ri[:3], [Ri[4]]]) * np.concatenate([dRi[:3], [dRi[4]]]), title = "проверка зависимости (6) (кроме Am)", xlabel = "1 / E, MeV^-1", ylabel = "Ri^2")
+
+cs137 = csvreader.readData("Cs137.csv")
+cs137alt = csvreader.readData("Cs137-alt.csv")
+
+fig, ax = graphs.basePlot()
+ax.plot(cs137[:, 0], cs137[:, 1], label = "our")
+ax.plot(cs137alt[:, 0], cs137alt[:, 1], label = "alt")
+plt.legend()
+plt.title("Спектры цезия 137 на нашей и соседней установках")
+plt.xlabel("канал")
+plt.ylabel("количество фотонов")
+plt.show()
