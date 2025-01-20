@@ -34,6 +34,7 @@ print(f"g = {g:.3f} +- {dg:.3f}")
 
 Bmod = 7.21e-3 * Bcoeff * 1e4
 dBmod = math.sqrt((0.1e-3 * Bcoeff)**2 + (7.21e-3 * dBcoeff)**2) * 1e4
+print(f"Bmod = ({Bmod:.2f} +- {dBmod:.2f}) Gs")
 B = 2 * Bmod / 8 * 4/5
 dB = 2 * dBmod / 8 * 4/5
 print(f"B = ({B:.2f} +- {dB:.2f}) Gs")
