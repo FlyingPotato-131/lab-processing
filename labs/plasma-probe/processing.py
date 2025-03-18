@@ -53,13 +53,14 @@ ne = -(k0 * Vf + delta) * math.exp(0.5) / e / S * math.sqrt(1.67e-27 * 4 / K / T
 dne = (dk0 * Vf + db0) * math.exp(0.5) / e / S * math.sqrt(1.67e-27 * 4 / K / Te) - (k0 * Vf + delta) * math.exp(0.5) / e / S * math.sqrt(1.67e-27 * 4 / K) / Te**1.5 / 2 * dTe
 print(f"ne = ({ne * 1e-12:.0f} +- {dne * 1e-12:.0f}) 1e3/mm^3")
 
-N = p / K / Te #helium concentration
-dN = p / K / Te**2 * dTe
-print(f"N = ({N * 1e-12:.0f} +- {dN * 1e-12:.0f}) 1e3/mm^3")
+N = p / K / 400 #helium concentration
+print(f"N = {N * 1e-12:.0f} 1e3/mm^3")
+# dN = p / K / Te**2 * dTe
+# print(f"N = ({N * 1e-12:.0f} +- {dN * 1e-12:.0f}) 1e3/mm^3")
 
 a = ne / N #ionization parameter
-da = dne / N + ne / N * (dN / N)
-print(f"a = ({a * 1e6:.0f} +- {da * 1e6:.0f}) 1e-6")
+da = dne / N
+print(f"a = ({a * 1e6:.2f} +- {da * 1e6:.2f}) 1e-6")
 
 rD = math.sqrt(K * Te / 4 / math.pi / ne) / e #Debai radius
 drD = 0.5 * math.sqrt(K / 4 / math.pi / ne / Te) / e * dTe + math.sqrt(K * Te / 4 / math.pi / ne) / e / ne**1.5 / 2 * dne
@@ -91,13 +92,13 @@ ne = 2 * b1 / e / S * math.sqrt(1.67e-27 * 4 / K / Te) #electron concentration
 dne = 2 * db1 / e / S * math.sqrt(1.67e-27 * 4 / K / Te) + 2 * b1 / e / S * math.sqrt(1.67e-27 * 4 / K) / Te**1.5 / 2 * dTe
 print(f"ne = ({ne * 1e-12:.0f} +- {dne * 1e-12:.0f}) 1e3/mm^3")
 
-N = p / K / Te #helium concentration
-dN = p / K / Te**2 * dTe
-print(f"N = ({N * 1e-12:.0f} +- {dN * 1e-12:.0f}) 1e3/mm^3")
+# N = p / K / Te #helium concentration
+# dN = p / K / Te**2 * dTe
+# print(f"N = ({N * 1e-12:.0f} +- {dN * 1e-12:.0f}) 1e3/mm^3")
 
 a = ne / N #ionization parameter
-da = dne / N + ne / N * (dN / N)
-print(f"a = ({a * 1e6:.0f} +- {da * 1e6:.0f}) 1e-6")
+da = dne / N
+print(f"a = ({a * 1e6:.2f} +- {da * 1e6:.2f}) 1e-6")
 
 rD = math.sqrt(K * Te / 4 / math.pi / ne) / e #Debai radius
 drD = 0.5 * math.sqrt(K / 4 / math.pi / ne / Te) / e * dTe + math.sqrt(K * Te / 4 / math.pi / ne) / e / ne**1.5 / 2 * dne
