@@ -10,6 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy
 
+E0 = 8.85e-12 #universal constant
 e = 1.6e-19 #electron charge
 K = 1.38e-23 #boltzmann constant
 S = math.pi * 0.3e-3 * 7e-3 #probe area
@@ -62,9 +63,9 @@ a = ne / N #ionization parameter
 da = dne / N
 print(f"a = ({a * 1e6:.2f} +- {da * 1e6:.2f}) 1e-6")
 
-rD = math.sqrt(K * Te / 4 / math.pi / ne) / e #Debai radius
-drD = 0.5 * math.sqrt(K / 4 / math.pi / ne / Te) / e * dTe + math.sqrt(K * Te / 4 / math.pi / ne) / e / ne**1.5 / 2 * dne
-print(f"rD = ({rD:.3f} +- {drD:.3f}) m")
+rD = math.sqrt(E0) * math.sqrt(K * Te / ne) / e #Debai radius
+drD = 0.5 * math.sqrt(E0) * math.sqrt(K / ne / Te) / e * dTe + math.sqrt(E0) * math.sqrt(K * Te / ne) / e / ne**1.5 / 2 * dne
+print(f"rD = ({rD * 1e6:.2f} +- {drD * 1e6:.2f}) um")
 print()
 
 plt.show()
@@ -100,9 +101,9 @@ a = ne / N #ionization parameter
 da = dne / N
 print(f"a = ({a * 1e6:.2f} +- {da * 1e6:.2f}) 1e-6")
 
-rD = math.sqrt(K * Te / 4 / math.pi / ne) / e #Debai radius
-drD = 0.5 * math.sqrt(K / 4 / math.pi / ne / Te) / e * dTe + math.sqrt(K * Te / 4 / math.pi / ne) / e / ne**1.5 / 2 * dne
-print(f"rD = ({rD:.3f} +- {drD:.3f}) m")
+rD = math.sqrt(E0) * math.sqrt(K * Te / ne) / e #Debai radius
+drD = 0.5 * math.sqrt(E0) * math.sqrt(K / ne / Te) / e * dTe + math.sqrt(E0) * math.sqrt(K * Te / ne) / e / ne**1.5 / 2 * dne
+print(f"rD = ({rD * 1e6:.2f} +- {drD * 1e6:.2f}) um")
 print()
 
 plt.show()
