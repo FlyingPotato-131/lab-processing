@@ -20,12 +20,17 @@ p = 39.9966 #pressure
 single_data = csvreader.readData("single.csv")
 double_data = csvreader.readData("double.csv")
 
-graphs.plot(single_data[:, 0], single_data[:, 1] * 1e3, 1e-7, 1e-7 * 1e3, title = "I(V) for 1 probe", xlabel = "V, V", ylabel = "I, mA") #I(V), one probe
-
+fig, ax = graphs.basePlot()
+ax.errorbar(single_data[:, 0], single_data[:, 1] * 1e3, 1e-7, 1e-7 * 1e3, fmt = '.') #I(V), one probe
+plt.title("I(V) for 1 probe")
+plt.xlabel("V, V")
+plt.ylabel("I, mA")
 
 ionpoints = 20
 k0, delta, dk0, db0 = graphs.lsqm(single_data[:ionpoints, 0], single_data[:ionpoints, 1], 1e-7 * np.ones(ionpoints), 1e-7 * np.ones(ionpoints))
-corrected = single_data[:, 1] - (k0 * 217 + delta) #correction for ionic current at Vf
+corrected = single_data[:, 1] - (k0 * single_data[:, 0] + delta) #correction for ionic current at Vf
+ax.plot([np.min(single_data[:, 0]), np.max(single_data[:, 0])], [k0 * 1e3 * np.min(single_data[:, 0]) + delta * 1e3, k0 * 1e3 * np.max(single_data[:, 0]) + delta * 1e3])
+plt.show()
 
 fig, ax = graphs.basePlot()
 plt.title("logarithmic for 1 probe")
@@ -37,6 +42,9 @@ l = np.size(corrected)
 ax.errorbar(single_data[-rmpoints:, 0], np.log(corrected[-rmpoints:]), 1e-7 / corrected[-rmpoints:], 1e-7, fmt = '.') #log(I) over V
 k, b, dk, db = graphs.lsqm(single_data[-rmpoints+5:, 0], np.log(corrected[-rmpoints+5:]), 1e-7 * np.ones(l - rmpoints + 5), 1e-7 / corrected[-rmpoints+5:]) #approximate linear function
 ax.plot([np.min(single_data[-rmpoints:, 0]), np.max(single_data[-rmpoints:, 0])], [k * np.min(single_data[-rmpoints:, 0]) + b, k * np.max(single_data[-rmpoints:, 0]) + b]) #plot linear approximation
+# ax.plot([np.min(single_data[-rmpoints:, 0]), np.max(single_data[-rmpoints:, 0])], [np.log(-k0 * 217 - delta), np.log(-k0 * 217 - delta)]) #horizontal line
+ax.plot([np.min(single_data[-rmpoints:, 0]), np.max(single_data[-rmpoints:, 0])], [np.log(-k0 * np.min(single_data[-rmpoints:, 0]) - delta), np.log(-k0 * np.max(single_data[-rmpoints:, 0]) - delta)]) #horizontal line
+ax.plot(single_data[-rmpoints:, 0], np.log(-k0 * single_data[-rmpoints:, 0] - delta)) #horizontal line
 
 Vf = (np.log(-delta) - b) / k #floating potential
 dVf = (-1e-7 / delta + db) / k + (np.log(-delta) - b) / k**2 * dk
