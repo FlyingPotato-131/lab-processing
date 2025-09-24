@@ -33,7 +33,7 @@ for i in range(1, 7): #plot separate velocity profiles
 	ax.plot([v0, v0], [data[1, i] * 0.01, data[samplesize[i], i] * 0.01], '--', label = "average flow velocity")
 	plt.xlabel("v, mm/s")
 	plt.ylabel("y, mm")
-	plt.title(f"velocity profile, x = {data[0, i] - 39.573212315627956:.0f}")
+	plt.title(f"velocity profile, x = {data[0, i] - 57:.0f}")
 	plt.legend()
 	# k, b, dk, db = graphs.lsqm()	
 	plt.show()
@@ -41,16 +41,20 @@ for i in range(1, 7): #plot separate velocity profiles
 fig, ax = graphs.basePlot()
 xaxis = np.linspace(60, 84, 100)
 ax.plot(data[0, 1:], delta, '.', label = "experimental")
-k, b, dk, db = graphs.lsqm(data[0, 1:], delta**2)
-ax.plot(xaxis, np.sqrt(k * xaxis + b), label = "approximation")
+# k, b, dk, db = graphs.lsqm(data[0, 1:], delta**2)
+k, b, dk, db = graphs.lsqm(np.log(data[0, 1:] - 57), np.log(delta))
+print(k)
+# ax.plot(xaxis, np.sqrt(k * xaxis + b), label = "approximation")
+ax.plot(xaxis, math.exp(b) * xaxis**k)
 plt.xlabel("x, mm")
 plt.ylabel("delta, mm")
 plt.title("boundary layer profile")
 plt.legend()
 plt.show()
 
-x0 = -b / k
-print(x0)
+# x0 = -b / k
+x0 = 57
+# print(x0)
 
 def eq_rhs(eta, y):
 	d0, d1, d2 = y
@@ -69,7 +73,7 @@ for i in range(1, 6): #plot velocity profiles with theoretical curve
 		dparam = dparam / 2
 		error = scipy.integrate.solve_ivp(eq_rhs, [0, 10], [0, 0, param]).y[1, -1] - 1
 	solution = scipy.integrate.solve_ivp(eq_rhs, [0, 10], [0, 0, param], max_step = 0.01)
-	ax.scatter(data[1:samplesize[i]+1, i] * 0.01 / math.sqrt(data[0, i] - x0), data[1:samplesize[i]+1, 0] * l0 / p / v0, label = f"x = {data[0, i]}") #TODO: figure out why this is so fucked
+	ax.scatter(data[1:samplesize[i]+1, i] * 0.01 / math.sqrt(data[0, i] - x0), data[1:samplesize[i]+1, 0] / data[samplesize[i], 0], label = f"x = {data[0, i]}") #TODO: figure out why this is so fucked
 	ax.plot(solution.t, solution.y[1, :])
 plt.xlabel("eta")
 plt.ylabel("v/v0")
