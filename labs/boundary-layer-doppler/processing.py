@@ -33,7 +33,7 @@ for i in range(1, 7): #plot separate velocity profiles
 	ax.plot([v0, v0], [data[1, i] * 0.01, data[samplesize[i], i] * 0.01], '--', label = "average flow velocity")
 	plt.xlabel("v, mm/s")
 	plt.ylabel("y, mm")
-	plt.title(f"velocity profile, x = {data[0, i] - 39.573212315627956}")
+	plt.title(f"velocity profile, x = {data[0, i] - 39.573212315627956:.0f}")
 	plt.legend()
 	# k, b, dk, db = graphs.lsqm()	
 	plt.show()
