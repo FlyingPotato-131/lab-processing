@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy
 
-p = 4 * math.pi * math.sin(math.radians(10) / 2) #constant in eq 7.4
+p = 2 * math.sin(math.radians(10) / 2) #constant in eq 7.4
 l0 = 632.8e-6 #wavelength in mm
 v0 = 6.06 #mm/s
 # v0 = 4 #mm/s
@@ -26,14 +26,14 @@ for i in range(1, 7): #plot separate velocity profiles
 
 	ax.errorbar(data[1:samplesize[i]+1, 0] * l0 / p, data[1:samplesize[i]+1, i] * 0.01, 0.01, 100 * l0 / p, '.', label = "measured profile")
 	curve = np.poly1d(np.polyfit(data[1:samplesize[i]+1, 0] * l0 / p, data[1:samplesize[i]+1, i] * 0.01, 4))
-	delta[i-1] = curve(v0/5)
+	delta[i-1] = curve(v0)
 	ax.plot(vaxis, curve(vaxis))
 
 
 	ax.plot([v0, v0], [data[1, i] * 0.01, data[samplesize[i], i] * 0.01], '--', label = "average flow velocity")
 	plt.xlabel("v, mm/s")
 	plt.ylabel("y, mm")
-	plt.title(f"velocity profile, x = {data[0, i]}")
+	plt.title(f"velocity profile, x = {data[0, i] - 39.573212315627956}")
 	plt.legend()
 	# k, b, dk, db = graphs.lsqm()	
 	plt.show()
