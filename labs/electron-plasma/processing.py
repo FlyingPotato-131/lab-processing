@@ -40,7 +40,7 @@ def matrix(content): #code stolen from builtin plot.py
         m.append(arr)
     return x, np.array(z), np.array(m)
 
-index = ["N, 1torr", "Ar 2.5torr", "N 2.5torr", "N 5torr", "Ar 5torr", "Ar 5torr"] #index experiments
+index = ["Ar, 5torr", "Ar 2.5torr", "Ar 1torr", "N 5torr", "N 2.5torr", "N 1torr"] #index experiments
 
 for image_path in os.listdir("images"):
     # Загружаем изображение
@@ -77,7 +77,7 @@ for image_path in os.listdir("images"):
         avgdata = data.mean(axis=1)
         # print(data)
 
-        # plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
+        plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
 
     # if os.path.isdir(f"theor/{image_path[0]}"):
         # print(image_path[0])
