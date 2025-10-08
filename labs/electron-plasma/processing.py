@@ -40,7 +40,7 @@ def matrix(content): #code stolen from builtin plot.py
         m.append(arr)
     return x, np.array(z), np.array(m)
 
-index = ["", "Ar 2.5torr", "", "", "Ar 5torr", "Ar 4torr"] #index experiments
+index = ["N, 1torr", "Ar 2.5torr", "N 2.5torr", "N 5torr", "Ar 5torr", "Ar 5torr"] #index experiments
 
 for image_path in os.listdir("images"):
     # Загружаем изображение
@@ -77,7 +77,7 @@ for image_path in os.listdir("images"):
         avgdata = data.mean(axis=1)
         # print(data)
 
-        plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
+        # plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
 
     # if os.path.isdir(f"theor/{image_path[0]}"):
         # print(image_path[0])
@@ -86,7 +86,7 @@ for image_path in os.listdir("images"):
     # Строим
     plt.plot(z / height * diam, sum_channel_avg, color='black', linestyle='-', label="Среднее (R+G+B)/3")
     plt.plot(z / height * diam, gauss(z, *(params[0])), color = 'red', linestyle = '--', label = "подгон нормального распределения")
-    plt.plot([params[0][1] / height * diam, params[0][1] / height * diam], [0, np.max(sum_channel_avg)], color = "violet", linestyle = "--")
+    plt.plot([params[0][1] / height * diam, params[0][1] / height * diam], [0, np.max(sum_channel_avg)], color = "violet", linestyle = "--", label = f"max излучения z = {params[0][1] / height * diam:.0f} mm")
 
     plt.title(f"Усреднённые интенсивности каналов RGB, {index[int(image_path[0]) - 1]}")
     plt.xlabel("z, mm")
