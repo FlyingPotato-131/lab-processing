@@ -40,12 +40,15 @@ def matrix(content): #code stolen from builtin plot.py
         m.append(arr)
     return x, np.array(z), np.array(m)
 
-index = ["Ar, 5torr", "Ar 2.5torr", "Ar 1torr", "N 5torr", "N 2.5torr", "N 1torr"] #index experiments
+index = ["N, 5torr", "N 2.5torr", "N 1torr", "Ar 5torr", "Ar 2.5torr", "Ar 1torr"] #index experiments
 
-for image_path in os.listdir("images"):
+fig1, ax1 = graphs.basePlot()
+fig2, ax2 = graphs.basePlot()
+
+for image_path in sorted(os.listdir("images")):
     # Загружаем изображение
     img = Image.open(f"images/{image_path}").convert("RGB")
-    print(image_path)
+    # print(image_path)
 
     # Переводим в массив numpy
     img_array = np.array(img)
@@ -66,31 +69,39 @@ for image_path in os.listdir("images"):
     height = 260
     diam = 25.3 #external tube diameter, mm
 
-    plt.figure(figsize=(12, 6)) #create graph
+    # if(int(image_path[0]) == 1 or int(image_path[0]) == 4):
+    #     # plt.figure(figsize=(12, 6)) #create graph
+    #     fig, ax = graphs.basePlot()
 
     #open theoretical data (if exists)
-    if os.path.isdir(f"theor/{image_path[0]}"):
-        with open(f"theor/{image_path[0]}/Temp.txt", encoding = "cp1251") as dist_file: #read file
-            dist_theor = dist_file.read().splitlines()
+    # if os.path.isdir(f"theor/{image_path[0]}"):
+    #     with open(f"theor/{image_path[0]}/Temp.txt", encoding = "cp1251") as dist_file: #read file
+    #         dist_theor = dist_file.read().splitlines()
 
-        r, z_t, data = matrix(dist_theor)        
-        avgdata = data.mean(axis=1)
-        # print(data)
+    #     r, z_t, data = matrix(dist_theor)        
+    #     avgdata = data.mean(axis=1)
+    #     # print(data)
 
-        plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
+    #     plt.plot(z_t * 10, avgdata / np.max(avgdata) * np.max(sum_channel_avg)) #plot converting z to mm and normalizing units
 
     # if os.path.isdir(f"theor/{image_path[0]}"):
         # print(image_path[0])
         # dist_theor = csvreader.readTable(f"theor/{image_path[0]}/Power.txt", 251, titleSize = 3, split = ' ', enc = "cp1251")
 
     # Строим
-    plt.plot(z / height * diam, sum_channel_avg, color='black', linestyle='-', label="Среднее (R+G+B)/3")
-    plt.plot(z / height * diam, gauss(z, *(params[0])), color = 'red', linestyle = '--', label = "подгон нормального распределения")
-    plt.plot([params[0][1] / height * diam, params[0][1] / height * diam], [0, np.max(sum_channel_avg)], color = "violet", linestyle = "--", label = f"max излучения z = {params[0][1] / height * diam:.0f} mm")
-
-    plt.title(f"Усреднённые интенсивности каналов RGB, {index[int(image_path[0]) - 1]}")
-    plt.xlabel("z, mm")
-    plt.ylabel("Интенсивность")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    if(int(image_path[0]) < 4):
+        ax1.plot(z / height * diam, sum_channel_avg / np.max(sum_channel_avg), linestyle='-', label=f"Среднее (R+G+B)/3, {index[int(image_path[0]) - 1]}")
+        ax1.plot(z / height * diam, gauss(z, *(params[0])) / np.max(sum_channel_avg), linestyle = '--', label = f"подгон нормального распределения, {index[int(image_path[0]) - 1]}")
+        ax1.plot([params[0][1] / height * diam, params[0][1] / height * diam], [0, 1], linestyle = "--", label = f"max излучения z = {params[0][1] / height * diam:.0f} mm, {index[int(image_path[0]) - 1]}")
+    else:    
+        ax2.plot(z / height * diam, sum_channel_avg / np.max(sum_channel_avg), linestyle='-', label=f"Среднее (R+G+B)/3, {index[int(image_path[0]) - 1]}")
+        ax2.plot(z / height * diam, gauss(z, *(params[0])) / np.max(sum_channel_avg), linestyle = '--', label = f"подгон нормального распределения, {index[int(image_path[0]) - 1]}")
+        ax2.plot([params[0][1] / height * diam, params[0][1] / height * diam], [0, 1], linestyle = "--", label = f"max излучения z = {params[0][1] / height * diam:.0f} mm, {index[int(image_path[0]) - 1]}")
+    # plt.title(f"Усреднённые интенсивности каналов RGB, {index[int(image_path[0]) - 1]}")
+plt.xlabel("z, mm")
+plt.ylabel("Интенсивность")
+ax1.legend()
+ax2.legend()
+    # plt.show()
+    # if(int(image_path[0]) == 3 or int(image_path[0]) == 6):
+plt.show()
