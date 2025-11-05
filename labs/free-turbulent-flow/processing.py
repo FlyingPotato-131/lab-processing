@@ -40,10 +40,10 @@ plt.show()
 
 #plot dimensionless velocity over distance
 fig, ax = graphs.basePlot()
-ax.plot(data[1:, 0] / D, data[1:, 11] / data[1, 11])
+ax.plot(data[1:, 0] / D, 1 / (data[1:, 11] / data[1, 11]))
 plt.title("dimensionless axial velocity")
 plt.xlabel("x / D")
-plt.ylabel("U / U[x = 0]")
+plt.ylabel("U[x = 0] / U")
 plt.show()
 
 #plot flow width
@@ -51,6 +51,7 @@ fig, ax = graphs.basePlot()
 widths = np.empty(9)
 for h in range(data.shape[0] - 1):
 	Uhalf = np.max(data[h + 1, 1:]) / 2
+	# print(data[h + 1, 1:][data[h + 1, 1:] > Uhalf])
 	width = 10 * data[h + 1, 1:][data[h + 1, 1:] > Uhalf].size
 	widths[h] = width
 ax.plot(data[1:, 0], widths)
@@ -60,12 +61,11 @@ plt.ylabel("r, mm")
 plt.show()
 
 #plot dimensionless velocity profiles
-r = np.arange(-150, 151, dr)
 fig, ax = graphs.basePlot()
 for h in range(data.shape[0] - 1):
-	ax.plot((r + 50) / D, data[h + 1, 1:] / data[h + 1, 11], label = f"x = {data[h + 1, 0]:.0f} mm")
+	ax.plot((r + 50) / widths[h], data[h + 1, 1:] / data[h + 1, 11], label = f"x = {data[h + 1, 0]:.0f} mm")
 plt.title("velocity profiles")
-plt.xlabel("r / D")
+plt.xlabel("r / r_1/2(x)")
 plt.ylabel("U / U[r = 0]")
 plt.legend()
 plt.show()
