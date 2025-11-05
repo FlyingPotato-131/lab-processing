@@ -38,7 +38,7 @@ for image_path in sorted(os.listdir("clean_crop")):
 plt.legend()
 plt.xlabel("z, mm")
 plt.ylabel("intensity")
-plt.title("intensity distribution")
+plt.title("intensity distribution, clean")
 plt.show()
 
 #plot dirty
@@ -64,8 +64,11 @@ for image_path in sorted(os.listdir("dirty_crop")):
 plt.legend()
 plt.xlabel("z, mm")
 plt.ylabel("intensity")
-plt.title("intensity distribution")
+plt.title("intensity distribution, dirty")
 plt.show()
+
+#generate x axis
+wvl = np.arange(0, 1145 - 101, 1) / 983 * 700 #nm
 
 #clean spectre graphs
 for pressure in [1, 2.5, 5]:
@@ -98,18 +101,18 @@ for pressure in [1, 2.5, 5]:
 
 	fig, ax = graphs.basePlot()
 
-	ax.plot(total_spec - lamp_spec, label = "total - lamp")
-	ax.plot(plasma_spec, label = "plasma")
+	ax.plot(total_spec - lamp_spec, label = "total - lamp clean")
+	ax.plot(plasma_spec, label = "plasma clean")
 
-	plt.legend()
-	plt.xlabel("freq, px")
-	plt.ylabel("intensity")
-	plt.title(f"clean He spectre, {pressure} torr")
+	# plt.legend()px
+	# plt.xlabel("wavelength, nm")
+	# plt.ylabel("intensity")
+	# plt.title(f"clean He spectre, {pressure} torr")
 
-	plt.show()
+	# plt.show()
 
 #dirty spectre graphs
-for pressure in [1, 2.5, 5]:
+# for pressure in [1, 2.5, 5]:
 	#open images into arrays, crop
 	lamp = np.array(Image.open(f"dirty_spec_crop/{pressure}_lamp.bmp").convert("RGB"))[131:899, 101:1145, :]
 	plasma = np.array(Image.open(f"dirty_spec_crop/{pressure}_plasma.bmp").convert("RGB"))[131:899, 101:1145, :]
@@ -137,15 +140,16 @@ for pressure in [1, 2.5, 5]:
 				total_spec[w] = 899 - 131 - h
 				break
 
-	fig, ax = graphs.basePlot()
+	# fig, ax = graphs.basePlot()
 
-	ax.plot(total_spec - lamp_spec, label = "total - lamp")
-	ax.plot(plasma_spec, label = "plasma")
+	ax.plot(total_spec - lamp_spec, label = "total - lamp dirty")
+	ax.plot(plasma_spec, label = "plasma dirty")
 
 	plt.legend()
-	plt.xlabel("freq, px")
+	plt.xlabel("wavelength, nm")
 	plt.ylabel("intensity")
-	plt.title(f"dirty He spectre, {pressure} torr")
+	# plt.title(f"dirty He spectre, {pressure} torr")
+	plt.title(f"He spectre, {pressure} torr")
 
 	plt.show()
 
